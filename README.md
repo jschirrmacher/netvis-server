@@ -5,6 +5,14 @@ A simple Node.js application for a
 together with some sample data to provide an example for a quick start
 for own implementations.
 
+## What can it do?
+
+- Display differnt types of network relations between nodes.
+- Show detail descriptions for each node (if supplied) by clicking on the node.
+- Optimized for larger networks by showing related nodes only when requested.
+
+See the example below to see how it in action.
+
 ## Example
 
 [![Screenshot - click to see it in action](https://jschirrmacher.github.io/netvis-server/public/netvis.png)](https://jschirrmacher.github.io/netvis-server/public/)
