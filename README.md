@@ -5,6 +5,12 @@ A simple Node.js application for a
 together with some sample data to provide an example for a quick start
 for own implementations.
 
+## Example
+
+[![Screenshot - click to see it in action](https://jschirrmacher.github.io/netvis/example/netvis.png)](https://jschirrmacher.github.io/netvis/example/)
+
+[Click image to see it live](https://jschirrmacher.github.io/netvis/example/)
+
 ## Install and start server
 
 To run the server, you need to install [Node.js](https://nodejs.org/en/)
