@@ -1,7 +1,9 @@
 const converter = new showdown.Converter()
 const source = document.getElementById('detailForm').innerHTML
 const detailFormTemplate = Handlebars.compile(source)
-const name = 'data/' + (location.pathname.replace(/.*\/(.*)$/, '$1') || 'person')
+const match = location.search.match(/\bt=(\w+)/)
+const type = match ? match[1] : 'person'
+const name = 'data/' + type
 
 const network = new Network(name, '#root', {
   nameRequired: function() {
