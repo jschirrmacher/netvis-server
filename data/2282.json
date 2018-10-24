@@ -1,0 +1,15 @@
+{
+  "id": 2282,
+  "name": "Ideenentwicklung",
+  "deletable": true,
+  "type": "topic",
+  "distance": 50,
+  "links": [
+    {
+      "type": "interestedParties",
+      "nodes": [
+        2256
+      ]
+    }
+  ]
+}

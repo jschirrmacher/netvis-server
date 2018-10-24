@@ -1,0 +1,25 @@
+{
+  "name": "netvis-server",
+  "version": "1.0.0",
+  "description": "A simple Node.js application for a NetVis based frontend together with some sample data to provide an example for a quick start for own implementations",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"forever --watch --watchDirectory . example\" \"sleepms 1000 && open http://localhost:3000\"",
+    "test": "eslint *.js"
+  },
+  "keywords": [
+    "netvis",
+    "network",
+    "visualization",
+    "d3js"
+  ],
+  "author": "joachimschirrmacher@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "js-netvis": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.7.0"
+  }
+}
