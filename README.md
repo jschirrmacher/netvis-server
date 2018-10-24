@@ -7,9 +7,9 @@ for own implementations.
 
 ## Example
 
-[![Screenshot - click to see it in action](https://jschirrmacher.github.io/netvis/example/netvis.png)](https://jschirrmacher.github.io/netvis/example/)
+[![Screenshot - click to see it in action](https://jschirrmacher.github.io/netvis-server/public/netvis.png)](https://jschirrmacher.github.io/netvis-server/public/)
 
-[Click image to see it live](https://jschirrmacher.github.io/netvis/example/)
+[Click image to see it live](https://jschirrmacher.github.io/netvis-server/public/)
 
 ## Install and start server
 
