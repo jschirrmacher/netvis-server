@@ -19,7 +19,8 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "js-netvis": "^5.0.0"
+    "js-netvis": "^5.2.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "eslint": "^5.7.0"
