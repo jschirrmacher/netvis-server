@@ -32,7 +32,7 @@ class DataCollector {
     return node
   }
 
-  async initializeFromData(fileName) {
+  async initializeFromData() {
     const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'data.json')))
     data.nodes.forEach(node => {
       fs.writeFileSync(path.join(__dirname, 'data', node.id + '.yaml'), YAML.stringify(node))
