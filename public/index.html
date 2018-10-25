@@ -25,14 +25,16 @@
 </div>
 
 <script id="detailForm" type="text/x-handlebars-template">
-    <h2>
+    <h2 class="row">
+        <span class="input max-column" data-name="name" {{{editable}}}>{{name}}</span>
         <button class="close">×</button>
-        {{name}}
     </h2>
 
-    {{#image}}<div style="background-image: url({{this}})" class="profile-picture"></div>{{/image}}
+    <div class="row">
+        {{#image}}<div style="background-image: url({{this}})" class="profile-picture"></div>{{/image}}
 
-    <p>{{{mdDescription}}}</p>
+        <div class="textarea" data-name="description" {{{editable}}}>{{{mdDescription}}}</div>
+    </div>
 
     <!--suppress HtmlUnknownTarget -->
     {{#url}}<a href="{{this}}" target="_blank">{{this}}</a>{{/url}}

@@ -25,7 +25,9 @@ const network = new Network(name, '#root', {
         data.links[index].linkTitle = Handlebars.compile(texts.linkTitle)(data.links[index])
       })
       data.mdDescription = converter.makeHtml(data.description || texts['defaultDescription'])
+      data.editable = 'contentEditable="true"'
       form.innerHTML = detailFormTemplate(data)
+      form.dataset.id = node.id
       document.querySelectorAll('.command').forEach(el => {
         el.classList.toggle('active', !el.dataset.visible || !!eval(el.dataset.visible))
         el.addEventListener('click', event => {
@@ -40,3 +42,13 @@ const network = new Network(name, '#root', {
     })
   }
 }, texts)
+
+document.addEventListener('input', function (event) {
+  const body = JSON.stringify({[event.target.dataset.name]: event.target.innerHTML})
+  const headers = {'Content-Type': 'application/json'}
+  const idElement = event.path.find(el => el.dataset.id)
+  if (idElement) {
+    fetch('/node/' + idElement.dataset.id, {method: 'PUT', body, headers})
+      .catch(console.error)
+  }
+})

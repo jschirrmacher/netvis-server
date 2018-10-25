@@ -21,6 +21,16 @@ class DataCollector {
   async get(source) {
     return this.store[source] || (this.store[source] = await this.readData(source))
   }
+
+  async saveNodeChanges(id, change) {
+    const nodes = await this.get('data')
+    const node = nodes.find(n => n.id === id)
+    if (node) {
+      Object.keys(change).forEach(name => node[name] = change[name])
+      fs.writeFileSync(path.join('data', id + '.yaml'), YAML.stringify(node))
+    }
+    return node
+  }
 }
 
 module.exports = DataCollector

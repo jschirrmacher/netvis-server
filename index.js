@@ -5,6 +5,10 @@ const path = require('path')
 const DataCollector = require('./DataCollector')
 const dataCollector = new DataCollector()
 
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
 const PORT = process.env.PORT || 3000
 
 app.use((req, res, next) => {

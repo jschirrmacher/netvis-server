@@ -80,8 +80,7 @@ svg .node {
     display: table;
     clear: both; }
   .detailForm .profile-picture {
-    float: left;
-    display: inline-block;
+    flex: 0 0 120px;
     width: 120px;
     height: 120px;
     margin: 0 10px 10px 0;
@@ -160,5 +159,33 @@ svg .node {
     border: 1px solid #ccc;
     padding: 5px 10px;
     border-radius: 4px; }
+
+.row {
+  display: flex; }
+  .row .max-column {
+    flex-grow: 1; }
+
+.textarea p:first-of-type {
+  margin-top: 0; }
+.textarea p:first-of-type {
+  margin-bottom: 0; }
+
+*[contenteditable="true"]:focus-within {
+  border: 1px solid #aaaaaa;
+  overflow: auto;
+  outline: none; }
+  *[contenteditable="true"]:focus-within.textarea {
+    resize: vertical;
+    position: relative;
+    left: -0.25em;
+    top: -0.25em;
+    padding: 0.2em; }
+  *[contenteditable="true"]:focus-within.input {
+    margin: -0.25em -0.2em -0.3em;
+    padding: 0.2em;
+    max-height: 1.4em;
+    max-width: 100%;
+    display: inline-block;
+    overflow: hidden; }
 
 /*# sourceMappingURL=netvis.css.map */

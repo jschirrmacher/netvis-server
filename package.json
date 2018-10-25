@@ -17,6 +17,7 @@
   "repository": "https://github.com/jschirrmacher/netvis-server.git",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "js-netvis": "^5.0.0"
   },
