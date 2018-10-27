@@ -115,12 +115,12 @@ svg .node {
   height: 100%;
   width: 100%; }
   .details > div {
-    display: table-cell;
-    vertical-align: middle; }
+    display: table-cell; }
 
 .dialogOpen .details {
   display: table;
-  visibility: visible; }
+  visibility: visible;
+  background-color: rgba(128, 128, 128, 0.5); }
 
 .dialogOpen .detailForm {
   opacity: 1; }

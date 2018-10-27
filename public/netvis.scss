@@ -164,13 +164,13 @@ svg {
 
   > div {
     display: table-cell;
-    vertical-align: middle;
   }
 }
 
 .dialogOpen .details {
   display: table;
   visibility: visible;
+  background-color: rgba(128,128,128,0.5);
 }
 
 .dialogOpen .detailForm {
