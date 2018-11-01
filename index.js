@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 function sendNodes(source, res) {
   const calculateFields = node => {
     if (node.type === 'topic') {
-      node.fontSize = node.links ? Math.sqrt(node.links.reduce((s, e) => s + e.nodes.length, 0)) : 1
+      node.fontSize = node.links ? Math.sqrt(Object.keys(node.links).reduce((s, k) => s + node.links[k].length, 0)) : 1
     }
     return node
   }
