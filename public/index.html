@@ -10,7 +10,11 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 </head>
 <body>
-<svg id="root"></svg>
+<svg id="root">
+    <filter id="shadow" x="-10%" y="-10%" width="200%" height="200%">
+        <feDropShadow dx="6" dy="6" stdDeviation="6" flood-color="#888" flood-opacity="1"></feDropShadow>
+    </filter>
+</svg>
 
 <div class="zoom">
     <div>

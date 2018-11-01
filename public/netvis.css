@@ -47,6 +47,21 @@ svg .node {
     transform: translate(0, 40px); }
     svg .node.withBg > g tspan {
       text-shadow: none; }
+  svg .node[data-level="1"] circle, svg .node[data-level="1"] rect, svg .node[data-level="1"] text {
+    transform: scale(0.7);
+    opacity: 0.8; }
+  svg .node[data-level="2"] circle, svg .node[data-level="2"] rect, svg .node[data-level="2"] text {
+    transform: scale(0.5);
+    opacity: 0.7; }
+  svg .node[data-level="3"] circle, svg .node[data-level="3"] rect, svg .node[data-level="3"] text {
+    transform: scale(0.3);
+    fill: #fcffff; }
+  svg .node.withBg[data-level="1"] > g {
+    transform: translate(0, 28px); }
+  svg .node.withBg[data-level="2"] > g {
+    transform: translate(0, 20px); }
+  svg .node.withBg[data-level="3"] > g {
+    transform: translate(0, 12px); }
   svg .node:hover circle + g, svg .node.menuActive circle + g {
     transform: translateY(5em) scale(1.5); }
   svg .node rect {

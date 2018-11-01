@@ -14,17 +14,14 @@
       "distance": 50,
       "x": 711.5054730482202,
       "y": 354.34058569131184,
-      "links": [
-        {
-          "type": "topics",
-          "nodes": [
-            2033,
-            2034,
-            2035,
-            2036
-          ]
-        }
-      ],
+      "links": {
+        "topics": [
+          2033,
+          2034,
+          2035,
+          2036
+        ]
+      },
       "visible": true
     },
     {
@@ -35,15 +32,12 @@
       "distance": 50,
       "x": 910.2142051119324,
       "y": 347.95027969706797,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2037,
-            2038
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2037,
+          2038
+        ]
+      },
       "visible": false,
       "fontSize": 1.4142135623730951
     },
@@ -55,16 +49,13 @@
       "distance": 50,
       "x": 569.4120306349729,
       "y": 402.1416625237625,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2038,
-            2248,
-            2256
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2038,
+          2248,
+          2256
+        ]
+      },
       "visible": false,
       "fontSize": 1.7320508075688772
     },
@@ -76,15 +67,12 @@
       "distance": 50,
       "x": 700.4559721779608,
       "y": 204.76863504174298,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2037,
-            2038
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2037,
+          2038
+        ]
+      },
       "visible": false,
       "fontSize": 1.4142135623730951
     },
@@ -96,15 +84,12 @@
       "distance": 50,
       "x": 710.1145906384617,
       "y": 504.28222407864234,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2248,
-            2550
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2248,
+          2550
+        ]
+      },
       "visible": false,
       "fontSize": 1.4142135623730951
     },
@@ -120,18 +105,15 @@
       "connectable": true,
       "x": 850.3376934981387,
       "y": 210.4628366060079,
-      "links": [
-        {
-          "type": "topics",
-          "nodes": [
-            2033,
-            2035,
-            2245,
-            2275,
-            2308
-          ]
-        }
-      ],
+      "links": {
+        "topics": [
+          2033,
+          2035,
+          2245,
+          2275,
+          2308
+        ]
+      },
       "visible": true
     },
     {
@@ -145,16 +127,13 @@
       "type": "person",
       "x": 859.2942928984602,
       "y": 489.00505997097554,
-      "links": [
-        {
-          "type": "topics",
-          "nodes": [
-            2033,
-            2034,
-            2035
-          ]
-        }
-      ],
+      "links": {
+        "topics": [
+          2033,
+          2034,
+          2035
+        ]
+      },
       "visible": true
     },
     {
@@ -163,14 +142,11 @@
       "deletable": true,
       "distance": 50,
       "type": "topic",
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2037
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2037
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -184,18 +160,15 @@
       "type": "person",
       "x": 567.9789545290774,
       "y": 552.1289607777112,
-      "links": [
-        {
-          "type": "topics",
-          "nodes": [
-            2034,
-            2036,
-            2547,
-            2548,
-            2549
-          ]
-        }
-      ],
+      "links": {
+        "topics": [
+          2034,
+          2036,
+          2547,
+          2548,
+          2549
+        ]
+      },
       "visible": true
     },
     {
@@ -208,18 +181,15 @@
       "type": "person",
       "x": 420.20151195628046,
       "y": 417.4060314804536,
-      "links": [
-        {
-          "type": "topics",
-          "nodes": [
-            2034,
-            2281,
-            2282,
-            2283,
-            2284
-          ]
-        }
-      ],
+      "links": {
+        "topics": [
+          2034,
+          2281,
+          2282,
+          2283,
+          2284
+        ]
+      },
       "visible": true
     },
     {
@@ -228,14 +198,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2037
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2037
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -245,14 +212,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2256
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2256
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -262,14 +226,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2256
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2256
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -279,14 +240,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2256
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2256
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -296,14 +254,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2256
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2256
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -313,14 +268,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2313
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2313
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -330,14 +282,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2037
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2037
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -351,16 +300,13 @@
       "type": "person",
       "x": 537.6361392593635,
       "y": 255.52840606216526,
-      "links": [
-        {
-          "type": "topics",
-          "nodes": [
-            2034,
-            2035,
-            2299
-          ]
-        }
-      ],
+      "links": {
+        "topics": [
+          2034,
+          2035,
+          2299
+        ]
+      },
       "visible": true
     },
     {
@@ -369,14 +315,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2248
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2248
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -386,14 +329,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2248
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2248
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -403,14 +343,11 @@
       "deletable": true,
       "type": "topic",
       "distance": 50,
-      "links": [
-        {
-          "type": "interestedParties",
-          "nodes": [
-            2248
-          ]
-        }
-      ],
+      "links": {
+        "interestedParties": [
+          2248
+        ]
+      },
       "visible": false,
       "fontSize": 1
     },
@@ -424,14 +361,11 @@
       "type": "person",
       "x": 741.8714797573193,
       "y": 650.8794060915146,
-      "links": [
-        {
-          "type": "topics",
-          "nodes": [
-            2036
-          ]
-        }
-      ],
+      "links": {
+        "topics": [
+          2036
+        ]
+      },
       "visible": true
     }
   ]

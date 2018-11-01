@@ -8,7 +8,7 @@ const name = runsStatic ? 'data.json' : 'nodes/' + type
 
 const script = document.createElement('script')
 script.addEventListener('load', function () {
-  const network = new Network(name, '#root', {
+  const network = new Network({dataUrl: name, domSelector: '#root', texts, maxLevel: 3, handlers: {
     prepare: function(data) {
       return Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
     },
@@ -49,9 +49,9 @@ script.addEventListener('load', function () {
         })
       })
     }
-  }, texts)
+  }})
 })
-script.src = (runsStatic ? '../node_modules/js-netvis' : 'https://jschirrmacher.github.io/netvis') + '/dist/bundle.js'
+script.src = location.hostname === 'localhost' ? '/netvis.js' : 'https://jschirrmacher.github.io/netvis/dist/bundle.js'
 document.body.appendChild(script)
 
 document.addEventListener('input', function (event) {
