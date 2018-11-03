@@ -35,8 +35,13 @@ function sendNodes(source, res) {
     .then(nodes => res.json({nodes}))
 }
 
+function sendIndex(req, res){
+  const indexFile = fs.readFileSync(path.join(__dirname, 'public', 'index.html')).toString()
+  res.send(indexFile.replace(' data-static="true"', ''))
+}
+
 app.use('/netvis.js', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist', 'bundle.js')))
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')))
+app.get('/', sendIndex)
 
 app.use('/nodes', (req, res) => sendNodes('data', res))
 app.put('/nodes/:id', (req, res) => res.json(dataCollector.saveNodeChanges(req.params.id, req.body)))

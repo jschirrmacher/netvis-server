@@ -3,7 +3,7 @@ const source = document.getElementById('detailForm').innerHTML
 const detailFormTemplate = Handlebars.compile(source)
 const match = location.search.match(/\bt=(\w+)/)
 const type = match ? match[1] : 'person'
-const runsStatic = !!location.pathname.match(/index.html/)
+const runsStatic = Array.from(document.scripts).find(s => s.attributes.src && s.attributes.src.nodeValue === 'frontend.js').dataset.static
 const name = runsStatic ? 'data.json' : 'nodes/' + type
 
 const script = document.createElement('script')
@@ -51,7 +51,7 @@ script.addEventListener('load', function () {
     }
   }})
 })
-script.src = location.hostname === 'localhost' ? '/netvis.js' : 'https://jschirrmacher.github.io/netvis/dist/bundle.js'
+script.src = runsStatic ? 'https://jschirrmacher.github.io/netvis/dist/bundle.js' : '/netvis.js'
 document.body.appendChild(script)
 
 document.addEventListener('input', function (event) {
