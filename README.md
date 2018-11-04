@@ -15,7 +15,7 @@ See the example below to see how it in action.
 
 ## Example
 
-[![Screenshot - click to see it in action](https://jschirrmacher.github.io/netvis-server/public/netvis.png)](https://jschirrmacher.github.io/netvis-server/public/)
+[![Screenshot - click to see it in action](https://jschirrmacher.github.io/netvis-server/public/netvis.gif)](https://jschirrmacher.github.io/netvis-server/public/)
 
 [Click image to see it live](https://jschirrmacher.github.io/netvis-server/public/)
 
