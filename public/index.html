@@ -44,8 +44,8 @@
     {{#url}}<a href="{{this}}" target="_blank">{{this}}</a>{{/url}}
 
     <p class="tag-view">
-        {{#each links}}
-        <a href="#" class="command" data-cmd="showNodes" data-params="{{this.type}}">{{this.linkTitle}}</a>
+        {{#each linkTitles}}
+        <a href="#" class="command" data-cmd="showNodes" data-params="{{this.type}}">{{this.title}}</a>
         {{/each}}
     </p>
 </script>
