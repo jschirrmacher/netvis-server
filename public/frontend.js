@@ -58,7 +58,8 @@ document.body.appendChild(script)
 document.addEventListener('input', function (event) {
   const body = JSON.stringify({[event.target.dataset.name]: event.target.innerHTML})
   const headers = {'Content-Type': 'application/json'}
-  const idElement = event.path.find(el => el.dataset.id)
+  const path = event.path || (event.composedPath && event.composedPath()) || []
+  const idElement = path.find(el => el.dataset.id)
   if (idElement) {
     fetch('nodes/' + idElement.dataset.id, {method: 'PUT', body, headers})
       .catch(console.error)
