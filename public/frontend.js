@@ -4,7 +4,7 @@ const detailFormTemplate = Handlebars.compile(source)
 const match = location.search.match(/\bt=(\w+)/)
 const type = match ? match[1] : 'person'
 const runsStatic = Array.from(document.scripts).find(s => s.attributes.src && s.attributes.src.nodeValue === 'frontend.js').dataset.static
-const name = runsStatic ? 'data.json' : 'nodes/' + type
+const name = runsStatic ? 'data.json' : type + 's'
 const linkTitle = Handlebars.compile(texts.linkTitle)
 
 const module = {}

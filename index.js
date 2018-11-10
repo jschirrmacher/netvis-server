@@ -44,7 +44,8 @@ app.use('/netvis.js', express.static(path.join(__dirname, 'node_modules', 'js-ne
 app.use('/bundle.js.map', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist', 'bundle.js.map')))
 app.get('/', sendIndex)
 
-app.use('/nodes', (req, res) => sendNodes('data', res))
+app.get('/persons', (req, res) => sendNodes('data', res))
+app.get('/topics', (req, res) => sendNodes('data', res))
 app.put('/nodes/:id', (req, res) => res.json(dataCollector.saveNodeChanges(req.params.id, req.body)))
 
 app.use(express.static(path.join(__dirname, 'public')))
