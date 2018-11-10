@@ -1,23 +1,26 @@
 # NetVis Server
 
-A simple Node.js application for a
+A Node.js application for a
 [NetVis](https://github.com/jschirrmacher/netvis.git) based frontend
 together with some sample data to provide an example for a quick start
 for own implementations.
 
 ## What can it do?
 
-- Display differnt types of network relations between nodes.
+- Display different types of network relations between nodes.
 - Show detail descriptions for each node (if supplied) by clicking on the node.
 - Optimized for larger networks by showing related nodes only when requested.
+- Live-Edit feature: when changing the details of a node, those changes are sent to other clients via Websocket in real-time.
+- View-only version (without edit feature) works without a backend on every simple web server just by copying the files.
+  Like [here in github](https://jschirrmacher.github.io/netvis-server/public/).
 
-See the example below to see how it in action.
+See the example below to see it in action.
 
 ## Example
 
 [![Screenshot - click to see it in action](https://jschirrmacher.github.io/netvis-server/public/netvis.gif)](https://jschirrmacher.github.io/netvis-server/public/)
 
-[Click image to see it live](https://jschirrmacher.github.io/netvis-server/public/)
+[Click image to see it live](https://jschirrmacher.github.io/netvis-server/public/) (though you cannot edit there because it only works statically)
 
 ## Install and start server
 
