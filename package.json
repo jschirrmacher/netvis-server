@@ -22,11 +22,11 @@
     "express": "^4.16.4",
     "express-ws": "^4.0.0",
     "forever-fixed": "^0.16.1",
-    "js-netvis": "^5.2.0",
+    "js-netvis": "^5.5.0",
     "sleep-ms": "^2.0.1",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "eslint": "^5.7.0"
+    "eslint": "^5.9.0"
   }
 }
