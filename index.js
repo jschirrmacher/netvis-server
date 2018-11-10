@@ -41,6 +41,7 @@ function sendIndex(req, res){
 }
 
 app.use('/netvis.js', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist', 'bundle.js')))
+app.use('/bundle.js.map', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist', 'bundle.js.map')))
 app.get('/', sendIndex)
 
 app.use('/nodes', (req, res) => sendNodes('data', res))
