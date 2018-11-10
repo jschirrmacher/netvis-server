@@ -5,6 +5,8 @@ const app = express()
 const path = require('path')
 const DataCollector = require('./DataCollector')
 const dataCollector = new DataCollector()
+const NewsFeed = require('./NewsFeed')
+new NewsFeed(app, dataCollector)
 
 if (!fs.exists('data')) {
   fs.mkdir('data', () => dataCollector.initializeFromData())

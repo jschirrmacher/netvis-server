@@ -6,6 +6,21 @@ const YAML = require('yamljs')
 class DataCollector {
   constructor() {
     this.store = null
+    this.listeners = {}
+  }
+
+  registerListener(listener) {
+    const id = Math.max(...Object.keys(this.listeners), 0) + 1
+    this.listeners[id] = listener
+    return id
+  }
+
+  unregisterListener(listenerId) {
+    delete this.listeners[listenerId]
+  }
+
+  notifyListeners(change) {
+    Object.values(this.listeners).forEach(listener => listener(change))
   }
 
   readDir(source) {
@@ -24,11 +39,12 @@ class DataCollector {
 
   async saveNodeChanges(id, change) {
     const nodes = await this.get('data')
-    const node = nodes.find(n => n.id === id)
+    const node = nodes.find(n => n.id === +id)
     if (node) {
       Object.keys(change).forEach(name => node[name] = change[name])
       fs.writeFileSync(path.join(__dirname, 'data', id + '.yaml'), YAML.stringify(node))
     }
+    this.notifyListeners({type: 'update', node})
     return node
   }
 

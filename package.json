@@ -20,6 +20,7 @@
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
     "express": "^4.16.4",
+    "express-ws": "^4.0.0",
     "forever-fixed": "^0.16.1",
     "js-netvis": "^5.2.0",
     "sleep-ms": "^2.0.1",

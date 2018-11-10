@@ -60,6 +60,15 @@ script.addEventListener('load', function () {
       }
     }
   })
+
+  if (!runsStatic) {
+    const script = document.createElement('script')
+    script.onload = function () {
+      module.exports(location.host, 'feed', network)
+    }
+    script.src = 'UpdateListener.js'
+    document.body.appendChild(script)
+  }
 })
 script.src = runsStatic ? 'https://jschirrmacher.github.io/netvis/dist/bundle.js' : '/netvis.js'
 document.body.appendChild(script)
