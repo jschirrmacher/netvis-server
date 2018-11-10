@@ -7,50 +7,59 @@ const runsStatic = Array.from(document.scripts).find(s => s.attributes.src && s.
 const name = runsStatic ? 'data.json' : 'nodes/' + type
 const linkTitle = Handlebars.compile(texts.linkTitle)
 
+const module = {}
+let network
+
 const script = document.createElement('script')
 script.addEventListener('load', function () {
-  const network = new Network({dataUrl: name, domSelector: '#root', texts, maxLevel: 3, handlers: {
-    prepare: function(data) {
-      return Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
-    },
-    nameRequired: function() {
-      return Promise.resolve(window.prompt('Name'))
-    },
-    newNode: function(name) {
-      console.log('New node', name)
-      return {name, shape: 'circle'}
-    },
-    nodeRemoved: function(node) {
-      console.log('Node removed', node)
-    },
-    newLink: function(link) {
-      console.log('New link', link)
-    },
-    showDetails: function(data, form, node) {
-      return new Promise(resolve => {
-        data.linkTitles = Object.keys(data.links).map(function (type) {
-          return {type, title: linkTitle({title: texts[type] || type})}
-        })
-        data.mdDescription = converter.makeHtml(data.description || texts['defaultDescription'])
-        if (!runsStatic) {
-          data.editable = 'contentEditable="true"'
-        }
-        form.innerHTML = detailFormTemplate(data)
-        form.dataset.id = node.id
-        document.querySelectorAll('.command').forEach(el => {
-          el.classList.toggle('active', !el.dataset.visible || !!eval(el.dataset.visible))
-          el.addEventListener('click', event => {
-            network[event.target.dataset.cmd](node, event.target.dataset.params)
+  network = new Network({
+    dataUrl: name,
+    domSelector: '#root',
+    maxLevel: 3,
+    nodeRenderer: new NodeRenderer({levelSteps: 0.15}),
+    handlers: {
+      prepare: function (data) {
+        return Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
+      },
+      nameRequired: function () {
+        return Promise.resolve(window.prompt('Name'))
+      },
+      newNode: function (name) {
+        console.log('New node', name)
+        return {name, shape: 'circle'}
+      },
+      nodeRemoved: function (node) {
+        console.log('Node removed', node)
+      },
+      newLink: function (link) {
+        console.log('New link', link)
+      },
+      showDetails: function (data, form, node) {
+        return new Promise(resolve => {
+          data.linkTitles = Object.keys(data.links).map(function (type) {
+            return {type, title: linkTitle({title: texts[type] || type})}
+          })
+          data.mdDescription = converter.makeHtml(data.description || texts['defaultDescription'])
+          if (!runsStatic) {
+            data.editable = 'contentEditable="true"'
+          }
+          form.innerHTML = detailFormTemplate(data)
+          form.dataset.id = node.id
+          document.querySelectorAll('.command').forEach(el => {
+            el.classList.toggle('active', !el.dataset.visible || !!eval(el.dataset.visible))
+            el.addEventListener('click', event => {
+              network[event.target.dataset.cmd](node, event.target.dataset.params)
+              resolve()
+            })
+          })
+          form.getElementsByClassName('close')[0].addEventListener('click', event => {
+            event.preventDefault()
             resolve()
           })
         })
-        form.getElementsByClassName('close')[0].addEventListener('click', event => {
-          event.preventDefault()
-          resolve()
-        })
-      })
+      }
     }
-  }})
+  })
 })
 script.src = runsStatic ? 'https://jschirrmacher.github.io/netvis/dist/bundle.js' : '/netvis.js'
 document.body.appendChild(script)

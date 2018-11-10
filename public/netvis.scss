@@ -34,8 +34,8 @@ svg {
     stroke: #666;
     stroke-width: 0.5px;
 
-    &.open > circle:first-child,
-    &.open > rect:first-child {
+    &.open > circle,
+    &.open > rect {
       stroke: #f00;
       stroke-width: 2px;
     }
@@ -68,39 +68,6 @@ svg {
       tspan {
         text-shadow: none;
       }
-    }
-
-    &[data-level="1"] {
-      circle, rect, text {
-        transform: scale(0.7);
-        opacity: 0.8;
-      }
-    }
-
-    &[data-level="2"] {
-      circle, rect, text {
-        transform: scale(0.5);
-        opacity: 0.7;
-      }
-    }
-
-    &[data-level="3"] {
-      circle, rect, text {
-        transform: scale(0.3);
-        fill: #fcffff;
-      }
-    }
-
-    &.withBg[data-level="1"] > g {
-      transform: translate(0, 28px);
-    }
-
-    &.withBg[data-level="2"] > g {
-      transform: translate(0, 20px);
-    }
-
-    &.withBg[data-level="3"] > g {
-      transform: translate(0, 12px);
     }
 
     &:hover, &.menuActive {
@@ -294,4 +261,16 @@ svg {
     display: inline-block;
     overflow: hidden;
   }
+}
+
+.line.level-1 {
+  stroke-opacity: 0.7;
+}
+
+.line.level-2 {
+  stroke-opacity: 0.5;
+}
+
+.line.level-3 {
+  stroke-opacity: 0.3;
 }
