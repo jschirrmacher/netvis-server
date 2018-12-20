@@ -62,9 +62,29 @@ script.addEventListener('load', function () {
   })
 
   if (!runsStatic) {
+    function interpreter(msg) {
+      switch (msg.type) {
+        case 'scaleToNode':
+          network.scaleToNode(msg.node)
+          network.update()
+          break
+
+        case 'create':
+          network.addNode(msg.node)
+          break
+
+        case 'delete':
+          network.removeNode(msg.node)
+          break
+
+        case 'update':
+          network.updateNode(msg.node)
+      }
+    }
+
     const script = document.createElement('script')
     script.onload = function () {
-      module.exports(location.host, 'feed', network)
+      returnExports({location, route: 'feed', interpreter, timer: window, WebSocket})
     }
     script.src = 'UpdateListener.js'
     document.body.appendChild(script)

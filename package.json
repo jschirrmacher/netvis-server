@@ -20,9 +20,9 @@
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
     "express": "^4.16.4",
-    "express-ws": "^4.0.0",
     "forever-fixed": "^0.16.1",
     "js-netvis": "^5.5.0",
+    "js-ws-updater": "^1.0.0",
     "sleep-ms": "^2.0.1",
     "yamljs": "^0.3.0"
   },

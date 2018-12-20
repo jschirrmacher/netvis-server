@@ -60,50 +60,6 @@ svg .node {
   .command.active {
     display: block; }
 
-.detailForm {
-  padding: 0 15px 15px;
-  line-height: 1.3em;
-  max-width: 100%;
-  margin: 0 5px;
-  border: 1px solid #ccc;
-  background: white;
-  box-shadow: 1px 1px 5px #ddd;
-  opacity: 0;
-  transition: opacity 1s; }
-  @media (min-width: 500px) {
-    .detailForm {
-      max-width: 640px;
-      width: 500px;
-      margin: 0 auto; } }
-  .detailForm:after {
-    content: '';
-    display: table;
-    clear: both; }
-  .detailForm .profile-picture {
-    flex: 0 0 120px;
-    width: 120px;
-    height: 120px;
-    margin: 0 10px 10px 0;
-    border-radius: 50%;
-    background-position: center;
-    background-size: cover; }
-  .detailForm h2 button.close {
-    float: right;
-    border: none;
-    background: transparent; }
-  .detailForm .tag-view:before {
-    content: '';
-    display: table;
-    clear: both; }
-  .detailForm .tag {
-    border: 1px solid #bbbbbb;
-    padding: 5px;
-    line-height: 2.4em;
-    border-radius: 4px;
-    background: #bbddff;
-    font-size: 0.9em;
-    white-space: nowrap; }
-
 .details {
   visibility: hidden;
   font-size: 16px;
@@ -116,12 +72,60 @@ svg .node {
   width: 100%; }
   .details > div {
     display: table-cell; }
+  .details .details {
+    display: table;
+    visibility: visible;
+    background-color: rgba(128, 128, 128, 0.5); }
+  .details .detailForm {
+    opacity: 1; }
+  .details .detailForm {
+    padding: 0 15px 15px;
+    line-height: 1.3em;
+    max-width: 100%;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    background: white;
+    box-shadow: 1px 1px 5px #ddd;
+    opacity: 0;
+    transition: opacity 1s; }
+    @media (min-width: 500px) {
+      .details .detailForm {
+        max-width: 640px;
+        width: 500px;
+        margin: 0 auto; } }
+    .details .detailForm:after {
+      content: '';
+      display: table;
+      clear: both; }
+    .details .detailForm .profile-picture {
+      flex: 0 0 120px;
+      width: 120px;
+      height: 120px;
+      margin: 0 10px 10px 0;
+      border-radius: 50%;
+      background-position: center;
+      background-size: cover; }
+    .details .detailForm h2 button.close {
+      float: right;
+      border: none;
+      background: transparent; }
+    .details .detailForm .tag-view:before {
+      content: '';
+      display: table;
+      clear: both; }
+    .details .detailForm .tag {
+      border: 1px solid #bbbbbb;
+      padding: 5px;
+      line-height: 2.4em;
+      border-radius: 4px;
+      background: #bbddff;
+      font-size: 0.9em;
+      white-space: nowrap; }
 
 .dialogOpen .details {
   display: table;
   visibility: visible;
   background-color: rgba(128, 128, 128, 0.5); }
-
 .dialogOpen .detailForm {
   opacity: 1; }
 

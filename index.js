@@ -5,8 +5,9 @@ const app = express()
 const path = require('path')
 const DataCollector = require('./DataCollector')
 const dataCollector = new DataCollector()
-const NewsFeed = require('./NewsFeed')
-new NewsFeed(app, dataCollector)
+const WSUpdater = require('js-ws-updater')
+
+new WSUpdater({app, route: '/feed', modelListener: dataCollector, expressWs: require('express-ws')})
 
 if (!fs.exists('data')) {
   fs.mkdir('data', () => dataCollector.initializeFromData())
@@ -42,6 +43,7 @@ function sendIndex(req, res){
   res.send(indexFile.replace(' data-static="true"', ''))
 }
 
+app.use('/UpdateListener.js', express.static(path.join(__dirname, 'node_modules', 'js-ws-updater', 'UpdateListener.js')))
 app.use('/netvis.js', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist', 'bundle.js')))
 app.use('/bundle.js.map', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist', 'bundle.js.map')))
 app.get('/', sendIndex)
