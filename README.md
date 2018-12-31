@@ -39,6 +39,11 @@ then start the server:
 
     npm start
 
+or, if you want to change the code, the development server, which
+watches the source files and restarts when a change is recognized:
+
+    npm run start-dev
+
 Then open http://localhost:3000 and see the example data in your browser
 
 ## Parameters

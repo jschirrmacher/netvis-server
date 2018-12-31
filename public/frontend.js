@@ -7,7 +7,6 @@ const runsStatic = Array.from(document.scripts).find(s => s.attributes.src && s.
 const name = runsStatic ? 'data.json' : type + 's'
 const linkTitle = Handlebars.compile(texts.linkTitle)
 
-const module = {}
 let network
 
 const script = document.createElement('script')
@@ -79,6 +78,7 @@ script.addEventListener('load', function () {
 
         case 'update':
           network.updateNode(msg.node)
+          break
       }
     }
 
@@ -90,7 +90,7 @@ script.addEventListener('load', function () {
     document.body.appendChild(script)
   }
 })
-script.src = runsStatic ? 'https://jschirrmacher.github.io/netvis/dist/bundle.js' : '/netvis.js'
+script.src = runsStatic ? 'https://jschirrmacher.github.io/netvis/dist/bundle.js' : 'netvis/bundle.js'
 document.body.appendChild(script)
 
 document.addEventListener('input', function (event) {

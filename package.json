@@ -4,7 +4,8 @@
   "description": "A simple Node.js application for a NetVis based frontend together with some sample data to provide an example for a quick start for own implementations",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"forever --watch --watchDirectory . index.js\" \"sleepms 1000 && open http://localhost:3000\"",
+    "start-dev": "forever --watch --watchDirectory . index.js",
+    "start": "node index.js",
     "test": "eslint *.js"
   },
   "keywords": [
@@ -18,15 +19,13 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "concurrently": "^4.0.1",
     "express": "^4.16.4",
-    "forever-fixed": "^0.16.1",
     "js-netvis": "^5.5.0",
     "js-ws-updater": "^1.0.0",
-    "sleep-ms": "^2.0.1",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "forever-fixed": "^0.16.1",
     "eslint": "^5.9.0"
   }
 }
