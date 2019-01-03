@@ -1,3 +1,4 @@
+/* global Network, NodeRenderer, texts, returnExports, Handlebars, showdown */
 const converter = new showdown.Converter()
 const source = document.getElementById('detailForm').innerHTML
 const detailFormTemplate = Handlebars.compile(source)
@@ -6,16 +7,26 @@ const type = match ? match[1] : 'person'
 const runsStatic = Array.from(document.scripts).find(s => s.attributes.src && s.attributes.src.nodeValue === 'frontend.js').dataset.static
 const name = runsStatic ? 'data.json' : type + 's'
 const linkTitle = Handlebars.compile(texts.linkTitle)
+const logger = console
 
 let network
 
 const script = document.createElement('script')
 script.addEventListener('load', function () {
+  const icons = {
+    topics: '💬',
+    subtopics: '💬',
+    interestedParties: '👤'
+  }
+  const nodeRenderer = new NodeRenderer({levelSteps: 0.15, showRefLinks: true})
+  nodeRenderer.renderRefLinksContent = function (enter) {
+    enter.text(d => icons[d.type])
+  }
   network = new Network({
     dataUrl: name,
     domSelector: '#root',
     maxLevel: 3,
-    nodeRenderer: new NodeRenderer({levelSteps: 0.15}),
+    nodeRenderer,
     handlers: {
       prepare: function (data) {
         return Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
@@ -24,14 +35,14 @@ script.addEventListener('load', function () {
         return Promise.resolve(window.prompt('Name'))
       },
       newNode: function (name) {
-        console.log('New node', name)
+        logger.info('New node', name)
         return {name, shape: 'circle'}
       },
       nodeRemoved: function (node) {
-        console.log('Node removed', node)
+        logger.info('Node removed', node)
       },
       newLink: function (link) {
-        console.log('New link', link)
+        logger.info('New link', link)
       },
       showDetails: function (data, form, node) {
         return new Promise(resolve => {
@@ -60,28 +71,28 @@ script.addEventListener('load', function () {
     }
   })
 
-  if (!runsStatic) {
-    function interpreter(msg) {
-      switch (msg.type) {
-        case 'scaleToNode':
-          network.scaleToNode(msg.node)
-          network.update()
-          break
+  function interpreter(msg) {
+    switch (msg.type) {
+      case 'scaleToNode':
+        network.scaleToNode(msg.node)
+        network.update()
+        break
 
-        case 'create':
-          network.addNode(msg.node)
-          break
+      case 'create':
+        network.addNode(msg.node)
+        break
 
-        case 'delete':
-          network.removeNode(msg.node)
-          break
+      case 'delete':
+        network.removeNode(msg.node)
+        break
 
-        case 'update':
-          network.updateNode(msg.node)
-          break
-      }
+      case 'update':
+        network.updateNode(msg.node)
+        break
     }
+  }
 
+  if (!runsStatic) {
     const script = document.createElement('script')
     script.onload = function () {
       returnExports({location, route: 'feed', interpreter, timer: window, WebSocket})
@@ -100,6 +111,6 @@ document.addEventListener('input', function (event) {
   const idElement = path.find(el => el.dataset.id)
   if (idElement) {
     fetch('nodes/' + idElement.dataset.id, {method: 'PUT', body, headers})
-      .catch(console.error)
+      .catch(logger.error)
   }
 })

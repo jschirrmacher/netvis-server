@@ -29,25 +29,40 @@ svg .node {
   svg .node.open > circle, svg .node.open > rect {
     stroke: #f00;
     stroke-width: 2px; }
-  svg .node > g {
+  svg .node .title {
     transition: 0.5s; }
-    svg .node > g .text-bg {
-      fill: #fcffff;
-      rx: 5px;
-      ry: 5px; }
-    svg .node > g > text {
+    svg .node .title > text {
       transition: 0.5s 0.5s; }
-      svg .node > g > text tspan {
+      svg .node .title > text tspan {
         fill: #000;
         stroke-width: 0;
         font-weight: normal;
         text-anchor: middle;
         text-shadow: 0 0 5px #fff, 0 0 5px #fff; }
-  svg .node.withBg > g {
+  svg .node .text-bg {
+    fill: #fcffff;
+    rx: 5px;
+    ry: 5px; }
+  svg .node .reflinks {
+    position: absolute;
+    opacity: 0.001;
+    transition: opacity 0.3s; }
+    svg .node .reflinks text {
+      font-size: 15px;
+      stroke: #428bca; }
+    svg .node .reflinks .text-bg {
+      fill: #eeefef;
+      rx: 5px;
+      ry: 5px; }
+    svg .node .reflinks g:hover .text-bg {
+      fill: #cccfcf; }
+  svg .node:hover .reflinks {
+    opacity: 1; }
+  svg .node.withBg .title {
     transform: translate(0, 40px); }
-    svg .node.withBg > g tspan {
+    svg .node.withBg .title tspan {
       text-shadow: none; }
-  svg .node:hover circle + g, svg .node.menuActive circle + g {
+  svg .node.withBg:hover .title {
     transform: translateY(5em) scale(1.5); }
   svg .node rect {
     stroke: none; }
@@ -129,10 +144,6 @@ svg .node {
 .dialogOpen .detailForm {
   opacity: 1; }
 
-.menuActive .title,
-.menuActive .text-bg {
-  display: none; }
-
 .zoom {
   position: absolute;
   right: 5px;
@@ -142,11 +153,11 @@ svg .node {
     margin-top: -100%; }
     .zoom > div > * {
       cursor: pointer;
-      background: white;
       padding: 5px 6.5px;
       border-radius: 50%;
-      border: 1px solid #ccc;
       margin: 10px 0; }
+      .zoom > div > *:hover {
+        background: #cccfcf; }
 
 .dialogOpen .zoom {
   display: none; }
@@ -159,10 +170,14 @@ svg .node {
   text-align: center;
   padding-top: 10px; }
   .selection a {
-    background: white;
+    background: #eeefef;
     border: 1px solid #ccc;
     padding: 5px 10px;
-    border-radius: 4px; }
+    border-radius: 4px;
+    text-decoration: none; }
+    .selection a:hover {
+      background: #cccfcf;
+      text-decoration: none; }
 
 .row {
   display: flex; }

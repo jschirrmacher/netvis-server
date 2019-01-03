@@ -40,14 +40,8 @@ svg {
       stroke-width: 2px;
     }
 
-    > g {
+    .title {
       transition: 0.5s;
-
-      .text-bg {
-        fill: #fcffff;
-        rx: 5px;
-        ry: 5px;
-      }
 
       > text {
         transition: 0.5s 0.5s;
@@ -62,7 +56,39 @@ svg {
       }
     }
 
-    &.withBg > g {
+    .text-bg {
+      fill: #fcffff;
+      rx: 5px;
+      ry: 5px;
+    }
+
+    .reflinks {
+      position: absolute;
+      opacity: 0.001;
+      transition: opacity 0.3s;
+
+      text {
+        font-size: 15px;
+        stroke: #428bca;
+      }
+
+      .text-bg {
+        fill: #eeefef;
+        rx: 5px;
+        ry: 5px;
+      }
+
+      g:hover .text-bg {
+        fill: #cccfcf;
+      }
+
+    }
+
+    &:hover .reflinks {
+      opacity: 1;
+    }
+
+    &.withBg .title {
       transform: translate(0, 40px);
 
       tspan {
@@ -70,10 +96,8 @@ svg {
       }
     }
 
-    &:hover, &.menuActive {
-      circle + g {
-        transform: translateY(5em) scale(1.5);
-      }
+    &.withBg:hover .title {
+      transform: translateY(5em) scale(1.5);
     }
 
     rect {
@@ -189,11 +213,6 @@ svg {
   }
 }
 
-.menuActive .title,
-.menuActive .text-bg {
-  display: none;
-}
-
 .zoom {
   position: absolute;
   right: 5px;
@@ -205,11 +224,13 @@ svg {
 
     > * {
       cursor: pointer;
-      background: white;
       padding: 5px 6.5px;
       border-radius: 50%;
-      border: 1px solid #ccc;
       margin: 10px 0;
+
+      &:hover {
+        background: #cccfcf;
+      }
     }
   }
 }
@@ -227,10 +248,16 @@ svg {
   padding-top: 10px;
 
   a {
-    background: white;
+    background: #eeefef;
     border: 1px solid #ccc;
     padding: 5px 10px;
     border-radius: 4px;
+    text-decoration: none;
+
+    &:hover {
+      background: #cccfcf;
+      text-decoration: none;
+    }
   }
 }
 
