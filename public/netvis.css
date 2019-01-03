@@ -1,10 +1,12 @@
+@charset "UTF-8";
 html, body, #root {
   margin: 0;
   width: 100%;
   height: 100%;
   background: radial-gradient(#ffffff, #eeffff);
   font: 1rem -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  color: #222222; }
+  color: #222222;
+  overflow: hidden; }
 
 button {
   -webkit-appearance: button;
@@ -148,14 +150,27 @@ svg .node {
   position: absolute;
   right: 5px;
   top: 50%;
-  font: 20px 'Glyphicons Halflings'; }
+  font-size: 20px; }
   .zoom > div {
     margin-top: -100%; }
     .zoom > div > * {
       cursor: pointer;
-      padding: 5px 6.5px;
       border-radius: 50%;
-      margin: 10px 0; }
+      margin: 10px 0;
+      position: relative;
+      text-align: center;
+      display: block;
+      height: 39px;
+      width: 27px;
+      padding-left: 12px;
+      font: 15px Courier, monospace;
+      line-height: 54px; }
+      .zoom > div > *:before {
+        content: '🔎';
+        font-size: 20px;
+        position: absolute;
+        top: -8px;
+        left: 7px; }
       .zoom > div > *:hover {
         background: #cccfcf; }
 

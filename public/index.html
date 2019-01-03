@@ -7,8 +7,6 @@
     <title>Network Visualizer</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="netvis.css" />
-    <!-- only for example reasons -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 </head>
 <body>
 <svg id="root">
@@ -19,14 +17,14 @@
 
 <div class="zoom">
     <div>
-        <div id="zoomOut" onclick="network.scale(0.66)" title="Zoom out">&#xe016</div>
-        <div id="zoomIn" onclick="network.scale(1.5)" title="Zoom in">&#xe015</div>
+        <div id="zoomOut" onclick="network.scale(0.66)" title="Zoom out">-</div>
+        <div id="zoomIn" onclick="network.scale(1.5)" title="Zoom in">+</div>
     </div>
 </div>
 
 <div class="selection">
-    <a href="?t=person">Personen</a>
-    <a href="?t=topic">Themen</a>
+    <a href="?t=person">👤 Personen</a>
+    <a href="?t=topic">💬 Themen</a>
 </div>
 
 <script id="detailForm" type="text/x-handlebars-template">
