@@ -48,7 +48,7 @@ svg .node {
     opacity: 0.001;
     transition: opacity 0.3s; }
     svg .node .reflinks text {
-      font-size: 15px;
+      font-size: 32px;
       stroke: #428bca; }
     svg .node .reflinks .text-bg {
       fill: #eeefef;
