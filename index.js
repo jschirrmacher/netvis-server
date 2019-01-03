@@ -10,7 +10,7 @@ const logger = console
 
 new WSUpdater({app, route: '/feed', modelListener: dataCollector, expressWs: require('express-ws')})
 
-if (!fs.exists('data')) {
+if (!fs.existsSync('data')) {
   fs.mkdir('data', () => dataCollector.initializeFromData())
 }
 
