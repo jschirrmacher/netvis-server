@@ -71,24 +71,26 @@ script.addEventListener('load', function () {
     }
   })
 
-  function interpreter(msg) {
-    switch (msg.type) {
-      case 'scaleToNode':
-        network.scaleToNode(msg.node)
-        network.update()
-        break
+  const interpreter = {
+    notify: (msg) => {
+      switch (msg.type) {
+        case 'scaleToNode':
+          network.scaleToNode(msg.node)
+          network.update()
+          break
 
-      case 'create':
-        network.addNode(msg.node)
-        break
+        case 'create':
+          network.addNode(msg.node)
+          break
 
-      case 'delete':
-        network.removeNode(msg.node)
-        break
+        case 'delete':
+          network.removeNode(msg.node)
+          break
 
-      case 'update':
-        network.updateNode(msg.node)
-        break
+        case 'update':
+          network.updateNode(msg.node)
+          break
+      }
     }
   }
 
