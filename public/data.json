@@ -36,6 +36,9 @@
         "interestedParties": [
           2037,
           2038
+        ],
+        "topics": [
+          2284
         ]
       },
       "visible": false,
@@ -54,6 +57,9 @@
           2038,
           2248,
           2256
+        ],
+        "topics": [
+          2282
         ]
       },
       "visible": false,
@@ -71,6 +77,11 @@
         "interestedParties": [
           2037,
           2038
+        ],
+        "topics": [
+          2245,
+          2308,
+          2549
         ]
       },
       "visible": false,
@@ -88,6 +99,11 @@
         "interestedParties": [
           2248,
           2550
+        ],
+        "topics": [
+          2549,
+          2548,
+          2547
         ]
       },
       "visible": false,
@@ -98,7 +114,7 @@
       "name": "Joachim Schirrmacher",
       "shape": "circle",
       "image": "https://www.xing.com/image/0_4_3_72e679b3d_3230655_6/joachim-schirrmacher-foto.256x256.jpg",
-      "description": "Software-Developer, Agile, REST, APIs, Lean Camp Organizer, XCamp Organizer, Lean Startup Circle",
+      "description": "Software-Developer, Agile, DevOps, REST, APIs, Lean Camp Organizer, XCamp Organizer, Lean Startup Circle",
       "url": "https://www.linkedin.com/in/joachimschirrmacher/",
       "twitterName": "jschirrmacher",
       "type": "person",
@@ -111,7 +127,8 @@
           2035,
           2245,
           2275,
-          2308
+          2308,
+          2246
         ]
       },
       "visible": true
@@ -139,6 +156,20 @@
     {
       "id": 2245,
       "name": "Scrum",
+      "deletable": true,
+      "distance": 50,
+      "type": "topic",
+      "links": {
+        "interestedParties": [
+          2037
+        ]
+      },
+      "visible": false,
+      "fontSize": 1
+    },
+    {
+      "id": 2246,
+      "name": "DevOps",
       "deletable": true,
       "distance": 50,
       "type": "topic",
