@@ -22,10 +22,31 @@ See the example below to see it in action.
 
 [Click image to see it live](https://jschirrmacher.github.io/netvis-server/public/) (though you cannot edit there because it only works statically)
 
+## Use with Docker
+
+The simplest way to try this is to use [Docker](https://docs.docker.com/install/). Just run it on your local computer, by using the pre-built image:
+
+    docker run -it --rm -p 3000:3000 joschi64/netvis-server
+
+You can even use own data by using a volume and set an environment accordingly:
+
+    docker run -it --rm -p 3000:3000 -e INIT_FILE=/server/init/data.json -v `pwd`/init:/server/init joschi64/netvis-server
+
+This mounts an `init` folder from your local disk in a path inside the docker container and instructs the server to use
+the file inside (`data.json`) as the initialization of the network. In this case, a copy of this data is created on the
+first run, so it don't get any changes you do later in your data.
+
+This behaviour can be modified by mounting a `data` volume into `/server/data`. If you change the files inside of this
+folder, these changes are at least used if you restart your container. This should be sufficient if you want to show
+different data sets but don't want to change the code.
+
+   docker run -it --rm -p 3000:3000 -v `pwd`/data:/server/data joschi64/netvis-server
+
+
 ## Install and start server
 
-To run the server, you need to install [Node.js](https://nodejs.org/en/)
-at least in version 8.
+If you do not want to use docker, or if you want to have more control over the code,
+you should install [Node.js](https://nodejs.org/en/) at least in version 8 and checkout the code.
 
 Install the server with
 

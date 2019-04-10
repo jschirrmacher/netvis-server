@@ -49,7 +49,8 @@ class DataCollector {
   }
 
   async initializeFromData() {
-    const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'data.json')))
+    const initFile = process.env.INIT_FILE || path.join(__dirname, 'public', 'data.json')
+    const data = JSON.parse(fs.readFileSync(initFile).toString())
     data.nodes.forEach(node => {
       fs.writeFileSync(path.join(__dirname, 'data', node.id + '.yaml'), YAML.stringify(node))
     })
