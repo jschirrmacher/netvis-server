@@ -24,23 +24,25 @@ script.addEventListener('load', function () {
   nodeRenderer.renderRefLinksContent = function (enter) {
     enter.text(d => icons[d.type])
   }
+
+  function prepare(data) {
+    const result = Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
+    const types = [...new Set(result.nodes.map(node => node.type))]
+    const base = '?' + (sourceMatch ? 'u=' + sourceMatch[2] + '&' : '')
+    const createOption = type => icons[type + 's'] ? {type, text: icons[type + 's'] + ' ' + texts[type + 's']} : null
+    const createLink = o => '<a href="' + base + o.type + '">' + o.text + '</a>'
+    const options = types.map(createOption).filter(d => d)
+    document.querySelector('.selection').innerHTML = options.length > 1 ? options.map(createLink).join('\n') : ''
+    return result
+  }
+
   network = new Network({
     dataUrl: name,
     domSelector: '#root',
     maxLevel: 3,
     nodeRenderer,
     handlers: {
-      prepare: function (data) {
-        const result = Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
-        const types = [...new Set(result.nodes.map(node => node.type))]
-        const base = '?' + (sourceMatch ? 'u=' + sourceMatch[2] + '&' : '')
-        document.querySelector('.selection').innerHTML = types.map(type => {
-          if (icons[type + 's']) {
-            return '<a href="' + base + 't=' + type + '">' + icons[type + 's'] + ' ' + texts[type + 's'] + '</a>'
-          }
-        }).filter(d => d).join('\n')
-        return result
-      },
+      prepare,
       nameRequired: function () {
         return Promise.resolve(window.prompt('Name'))
       },
