@@ -25,7 +25,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "forever-fixed": "^0.16.1",
-    "eslint": "^5.9.0"
+    "eslint": "^5.9.0",
+    "forever": "^1.0.0"
   }
 }
