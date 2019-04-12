@@ -5,7 +5,8 @@ const detailFormTemplate = Handlebars.compile(source)
 const match = location.search.match(/\bt=(\w+)/)
 const type = match ? match[1] : 'person'
 const runsStatic = Array.from(document.scripts).find(s => s.attributes.src && s.attributes.src.nodeValue === 'frontend.js').dataset.static
-const name = runsStatic ? 'data.json' : type + 's'
+const sourceMatch = location.search.match(/\b(u=([^&]+))/)
+const name = sourceMatch ? sourceMatch[2] : runsStatic ? 'data.json' : type + 's'
 const linkTitle = Handlebars.compile(texts.linkTitle)
 const logger = console
 
@@ -16,7 +17,8 @@ script.addEventListener('load', function () {
   const icons = {
     topics: '💬',
     subtopics: '💬',
-    interestedParties: '👤'
+    interestedParties: '👤',
+    persons: '👤'
   }
   const nodeRenderer = new NodeRenderer({levelSteps: 0.15, showRefLinks: true})
   nodeRenderer.renderRefLinksContent = function (enter) {
@@ -29,7 +31,15 @@ script.addEventListener('load', function () {
     nodeRenderer,
     handlers: {
       prepare: function (data) {
-        return Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
+        const result = Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
+        const types = [...new Set(result.nodes.map(node => node.type))]
+        const base = '?' + (sourceMatch ? 'u=' + sourceMatch[2] + '&' : '')
+        document.querySelector('.selection').innerHTML = types.map(type => {
+          if (icons[type + 's']) {
+            return '<a href="' + base + 't=' + type + '">' + icons[type + 's'] + ' ' + texts[type + 's'] + '</a>'
+          }
+        }).filter(d => d).join('\n')
+        return result
       },
       nameRequired: function () {
         return Promise.resolve(window.prompt('Name'))
