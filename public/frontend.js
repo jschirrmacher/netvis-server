@@ -26,14 +26,17 @@ script.addEventListener('load', function () {
   }
 
   function prepare(data) {
-    const result = Object.assign(data, {nodes: data.nodes.map(node => Object.assign(node, {visible: node.type === type}))})
-    const types = [...new Set(result.nodes.map(node => node.type))]
+    const types = {}
+    data.nodes = data.nodes.map(node => {
+      types[node.type] = true
+      return Object.assign(node, {visible: node.type === type})
+    })
     const base = '?' + (sourceMatch ? 'u=' + sourceMatch[2] + '&' : '')
     const createOption = type => icons[type + 's'] ? {type, text: icons[type + 's'] + ' ' + texts[type + 's']} : null
     const createLink = o => '<a href="' + base + o.type + '">' + o.text + '</a>'
-    const options = types.map(createOption).filter(d => d)
+    const options = Object.keys(types).map(createOption).filter(d => d)
     document.querySelector('.selection').innerHTML = options.length > 1 ? options.map(createLink).join('\n') : ''
-    return result
+    return data
   }
 
   network = new Network({
