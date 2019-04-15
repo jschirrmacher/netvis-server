@@ -1,9 +1,8 @@
-# NetVis Server
+# Assistify NetVis Server
 
 A Node.js application for a
 [NetVis](https://github.com/jschirrmacher/netvis.git) based frontend
-together with some sample data to provide an example for a quick start
-for own implementations.
+together with some sample data from Assistify.
 
 ## What can it do?
 
@@ -13,7 +12,11 @@ for own implementations.
 - Live-Edit feature: when changing the details of a node, those changes are sent to other clients via Websocket in real-time.
 - View-only version (without edit feature) works without a backend on every simple web server just by copying the files.
 
+## Static use
 
+Simply open `/public/index.html` to see a view-only version.
+It is fully interactive, but cannot be edited.
+This is only possible with the server variant. 
 
 ## Install and start server
 
@@ -22,7 +25,7 @@ you should install [Node.js](https://nodejs.org/en/) at least in version 8 and c
 
 Install the server with
 
-    git clone https://github.com/jschirrmacher/netvis-server.git
+    git clone https://github.com/assistify/netvis-server.git
 
 After that, install all dependencies:
 
