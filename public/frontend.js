@@ -46,6 +46,10 @@ script.addEventListener('load', function () {
     nodeRenderer,
     handlers: {
       prepare,
+      prepareLink: function (data) {
+        data.distance = 500 / (data.source.weights[data.target.name] || 5)
+        return data
+      },
       nameRequired: function () {
         return Promise.resolve(window.prompt('Name'))
       },
