@@ -47,7 +47,7 @@ script.addEventListener('load', function () {
     handlers: {
       prepare,
       prepareLink: function (data) {
-        data.distance = 500 / (data.source.weights['' + data.target.id] || 5)
+        data.distance = 500 / ((data.source.weights && data.source.weights['' + data.target.id]) || 5)
         return data
       },
       nameRequired: function () {
