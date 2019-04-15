@@ -20,7 +20,7 @@ script.addEventListener('load', function () {
     interestedParties: '👤',
     persons: '👤'
   }
-  const nodeRenderer = new NodeRenderer({levelSteps: 0.15, showRefLinks: true})
+  const nodeRenderer = new NodeRenderer({lshowRefLinks: true})
   nodeRenderer.renderRefLinksContent = function (enter) {
     enter.text(d => icons[d.type])
   }
@@ -47,7 +47,7 @@ script.addEventListener('load', function () {
     handlers: {
       prepare,
       prepareLink: function (data) {
-        data.distance = 500 / (data.source.weights[data.target.name] || 5)
+        data.distance = 500 / (data.source.weights['' + data.target.id] || 5)
         return data
       },
       nameRequired: function () {
