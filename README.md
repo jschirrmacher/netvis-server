@@ -4,6 +4,8 @@ A Node.js application for a
 [NetVis](https://github.com/jschirrmacher/netvis.git) based frontend
 together with some sample data from Assistify.
 
+See https://assistify.github.io/netvis-server/public/ for an example.
+
 ## What can it do?
 
 - Display different types of network relations between nodes.
@@ -12,20 +14,22 @@ together with some sample data from Assistify.
 - Live-Edit feature: when changing the details of a node, those changes are sent to other clients via Websocket in real-time.
 - View-only version (without edit feature) works without a backend on every simple web server just by copying the files.
 
+## Installation
+
+Simply `git clone https://github.com/assistify/netvis-server.git`
+
 ## Static use
 
-Simply open `/public/index.html` to see a view-only version.
+Open the file `/public/index.html` in your browser to see a view-only version.
 It is fully interactive, but cannot be edited.
-This is only possible with the server variant. 
+This is only possible with the server variant.
+
+To change the data to be displayed, change the `/public/data.json` file.
 
 ## Install and start server
 
-If you do not want to use docker, or if you want to have more control over the code,
-you should install [Node.js](https://nodejs.org/en/) at least in version 8 and checkout the code.
-
-Install the server with
-
-    git clone https://github.com/assistify/netvis-server.git
+If you want to change the content interactively,
+you should install [Node.js](https://nodejs.org/en/) at least in version 10.
 
 After that, install all dependencies:
 
