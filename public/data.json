@@ -1,403 +1,94 @@
 {
   "nodes": [
     {
-      "id": 2032,
-      "name": "XCamp",
+      "description": "",
+      "links": {
+        "persons": [
+          1
+        ]
+      },
+      "url": "HARDCODED URL",
       "shape": "circle",
-      "image": "https://xcamp.co/netvis/xcamp.png",
-      "description": "Auf dem XCamp treffen die Innovationstreiber aus Unternehmen und Start-ups, Design Thinker, Agile und Lean Startup-Experten der Metropolregion Frankfurt Rhein Main zusammen.",
-      "url": "https://xcamp.co/",
-      "twitterName": "xcamp",
-      "open": true,
-      "keepOpen": true,
-      "type": "root",
-      "distance": 50,
-      "x": 711.5054730482202,
-      "y": 354.34058569131184,
-      "links": {
-        "topics": [
-          2033,
-          2034,
-          2035,
-          2036
-        ]
+      "weights": {
+        "admin": 3
       },
-      "visible": true
-    },
-    {
-      "id": 2033,
-      "name": "Lean Startup",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "x": 910.2142051119324,
-      "y": 347.95027969706797,
-      "links": {
-        "interestedParties": [
-          2037,
-          2038
-        ],
-        "topics": [
-          2284
-        ]
-      },
-      "visible": false,
-      "fontSize": 1.4142135623730951
-    },
-    {
-      "id": 2034,
-      "name": "Design Thinking",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "x": 569.4120306349729,
-      "y": 402.1416625237625,
-      "links": {
-        "interestedParties": [
-          2038,
-          2248,
-          2256
-        ],
-        "topics": [
-          2282
-        ]
-      },
-      "visible": false,
-      "fontSize": 1.7320508075688772
-    },
-    {
-      "id": 2035,
-      "name": "Agile",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "x": 700.4559721779608,
-      "y": 204.76863504174298,
-      "links": {
-        "interestedParties": [
-          2037,
-          2038
-        ],
-        "topics": [
-          2245,
-          2308,
-          2549
-        ]
-      },
-      "visible": false,
-      "fontSize": 1.4142135623730951
-    },
-    {
-      "id": 2036,
-      "name": "User Experience",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "x": 710.1145906384617,
-      "y": 504.28222407864234,
-      "links": {
-        "interestedParties": [
-          2248,
-          2550
-        ],
-        "topics": [
-          2549,
-          2548,
-          2547
-        ]
-      },
-      "visible": false,
-      "fontSize": 1.4142135623730951
-    },
-    {
-      "id": 2037,
-      "name": "Joachim Schirrmacher",
-      "shape": "circle",
-      "image": "https://www.xing.com/image/0_4_3_72e679b3d_3230655_6/joachim-schirrmacher-foto.256x256.jpg",
-      "description": "Software-Developer, Agile, DevOps, REST, APIs, Lean Camp Organizer, XCamp Organizer, Lean Startup Circle",
-      "url": "https://www.linkedin.com/in/joachimschirrmacher/",
-      "twitterName": "jschirrmacher",
       "type": "person",
-      "connectable": true,
-      "x": 850.3376934981387,
-      "y": 210.4628366060079,
-      "links": {
-        "topics": [
-          2033,
-          2035,
-          2245,
-          2275,
-          2308,
-          2246
-        ]
-      },
-      "visible": true
+      "id": 0,
+      "name": "rocket.cat"
     },
     {
-      "id": 2038,
-      "name": "Christiane Gerigk",
+      "description": "",
+      "links": {
+        "persons": [
+          0,
+          2,
+          3,
+          4
+        ]
+      },
+      "url": "HARDCODED URL",
       "shape": "circle",
-      "image": "https://www.xing.com/image/1_9_3_3542476e8_3288678_3/christiane-gerigk-foto.256x256.jpg",
-      "description": "Dr. Christiane Gerigk arbeitet als Coach und Workshop-Moderatorin mit Teams gezielt in der Frühphase von Innovationsprozessen. Sie vermittelt on-the-Job die geeigneten Methoden aus agiler Entwicklung, Lean-Startup und Design Thinking. Gleichzeitig unterstützt sie Unternehmensleitung und Team dabei, wirkungsvolle organisatorische Voraussetzungen für Agilität in der Organisation zu schaffen.",
-      "url": "https://digital-wachsen.de",
-      "twitterName": "justsoandme",
+      "weights": {
+        "rocket.cat": 3,
+        "test1": 1,
+        "test3": 3,
+        "test2": 2
+      },
       "type": "person",
-      "x": 859.2942928984602,
-      "y": 489.00505997097554,
-      "links": {
-        "topics": [
-          2033,
-          2034,
-          2035
-        ]
-      },
-      "visible": true
+      "id": 1,
+      "name": "admin"
     },
     {
-      "id": 2245,
-      "name": "Scrum",
-      "deletable": true,
-      "distance": 50,
-      "type": "topic",
+      "description": "",
       "links": {
-        "interestedParties": [
-          2037
+        "persons": [
+          1,
+          3
         ]
       },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2246,
-      "name": "DevOps",
-      "deletable": true,
-      "distance": 50,
-      "type": "topic",
-      "links": {
-        "interestedParties": [
-          2037
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2248,
-      "name": "Wolf Nöding",
+      "url": "HARDCODED URL",
       "shape": "circle",
-      "image": "https://xcamp.co/netvis/persons/0x7563/picture/Wolf_03.png",
-      "description": "Als Customer Experience Consultant unterstütze ich Unternehmen in Digitalen Transformations-Projekten. Dabei speziell: Customer Jounrney Entwicklung, Konzepte für neue Online-Services, Omni Channel Modellierung, Prototyping, User Testings.",
-      "url": "http://wolfnoeding.de/",
-      "type": "person",
-      "x": 567.9789545290774,
-      "y": 552.1289607777112,
-      "links": {
-        "topics": [
-          2034,
-          2036,
-          2547,
-          2548,
-          2549
-        ]
+      "weights": {
+        "admin": 1,
+        "test2": 1
       },
-      "visible": true
+      "type": "person",
+      "id": 2,
+      "name": "test1"
     },
     {
-      "id": 2256,
-      "name": "Jens Bothmer",
+      "description": "",
+      "links": {
+        "persons": [
+          1,
+          2
+        ]
+      },
+      "url": "HARDCODED URL",
       "shape": "circle",
-      "image": "https://xcamp.co/netvis/persons/0x7555/picture/Jens_Bothmer_683_683_Portraits_Quadrat.png",
-      "description": "Mit agilen Innovationsmethoden wie Design Thinking hilft Jens Bothmer Unternehmen dabei, gute Ideen in erfolgreiche Geschäftsmodelle umzusetzen. Aufgrund seines Backgrounds besitzt Jens sehr gutes Fachwissen über Kreativitäts- und Innovationsprozesse von der Ideenentwicklung, über Konzeption bis hin zum Anforderungsmanagement und der Geschäftsmodellierung.\nMehr unter https://goo.gl/fgYNXW",
-      "url": "https://www.autentity.de",
+      "weights": {
+        "admin": 2,
+        "test1": 1
+      },
       "type": "person",
-      "x": 420.20151195628046,
-      "y": 417.4060314804536,
-      "links": {
-        "topics": [
-          2034,
-          2281,
-          2282,
-          2283,
-          2284
-        ]
-      },
-      "visible": true
+      "id": 3,
+      "name": "test2"
     },
     {
-      "id": 2275,
-      "name": "Product Management",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
+      "description": "",
       "links": {
-        "interestedParties": [
-          2037
+        "persons": [
+          1
         ]
       },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2281,
-      "name": "Transformation",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2256
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2282,
-      "name": "Ideenentwicklung",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2256
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2283,
-      "name": "Confluence",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2256
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2284,
-      "name": "Business Modelling",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2256
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2299,
-      "name": "Team development",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2313
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2308,
-      "name": "Kanban",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2037
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2313,
-      "name": "Bianca  Köllner",
+      "url": "HARDCODED URL",
       "shape": "circle",
-      "image": "https://www.xing.com/img/users/f/1/6/71bdbf591.23456580,3.256x256.jpg",
-      "description": "Kooperationskultur für digitale Transformation gestalten\nSinnstiftende Formen der Zusammenarbeit für Social Innovation",
-      "url": "https://www.xing.com/profile/BiancaNadine_Koellner/cv",
+      "weights": {
+        "admin": 3
+      },
       "type": "person",
-      "x": 537.6361392593635,
-      "y": 255.52840606216526,
-      "links": {
-        "topics": [
-          2034,
-          2035,
-          2299
-        ]
-      },
-      "visible": true
-    },
-    {
-      "id": 2547,
-      "name": "Customer Experience",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2248
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2548,
-      "name": "Lean UX",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2248
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2549,
-      "name": "UX in Agile",
-      "deletable": true,
-      "type": "topic",
-      "distance": 50,
-      "links": {
-        "interestedParties": [
-          2248
-        ]
-      },
-      "visible": false,
-      "fontSize": 1
-    },
-    {
-      "id": 2550,
-      "name": "Stefan Trost",
-      "shape": "circle",
-      "image": "https://xcamp.co/netvis/persons/0x755c/picture/4-small.JPG",
-      "description": "Ich bin Web Entwickler mit großem Interesse an Produktentwicklung.",
-      "url": "https://www.stefantrost.co",
-      "type": "person",
-      "x": 741.8714797573193,
-      "y": 650.8794060915146,
-      "links": {
-        "topics": [
-          2036
-        ]
-      },
-      "visible": true
+      "id": 4,
+      "name": "test3"
     }
   ]
 }
