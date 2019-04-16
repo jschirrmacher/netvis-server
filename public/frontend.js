@@ -44,8 +44,26 @@ script.addEventListener('load', function () {
     domSelector: '#root',
     maxLevel: 3,
     nodeRenderer,
+    velocityDecay: 0.2,
+    charge: function (manyBody) {
+      return manyBody.strength(-500)
+    },
+    collide: function (collide) {
+      return collide.radius(50).iterations(2)
+    },
+    forceX: function (force) {
+      return force.strength(0.05)
+    },
+    forceY: function (force) {
+      return force.strength(0.05)
+    },
     handlers: {
       prepare,
+      prepareLink: function (link) {
+        link.width = 2
+        link.distance = 200
+        return link
+      },
       nameRequired: function () {
         return Promise.resolve(window.prompt('Name'))
       },
