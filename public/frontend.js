@@ -29,7 +29,7 @@ script.addEventListener('load', function () {
     const types = {}
     data.nodes = data.nodes.map(node => {
       types[node.type] = true
-      return Object.assign(node, {visible: node.type === type})
+      return Object.assign(node, {visible: typeof node.visible === 'boolean' ? node.visible : node.type === type})
     })
     const base = '?' + (sourceMatch ? 'u=' + sourceMatch[2] + '&' : '')
     const createOption = type => icons[type + 's'] ? {type, text: icons[type + 's'] + ' ' + texts[type + 's']} : null
@@ -44,24 +44,24 @@ script.addEventListener('load', function () {
     domSelector: '#root',
     maxLevel: 3,
     nodeRenderer,
-    velocityDecay: 0.2,
+    velocityDecay: 0.02,
     charge: function (manyBody) {
-      return manyBody.strength(-500)
+      return manyBody.strength(-100)
     },
     collide: function (collide) {
-      return collide.radius(50).iterations(2)
+      return collide.radius(30)
     },
     forceX: function (force) {
-      return force.strength(0.05)
+      return force.strength(0.001)
     },
     forceY: function (force) {
-      return force.strength(0.05)
+      return force.strength(0.001)
     },
     handlers: {
       prepare,
       prepareLink: function (data) {
         data.width = 2
-        data.distance = 1000 - ((data.source.weights && data.source.weights['' + data.target.id]) || 5)
+        data.distance = 300 / ((data.source.weights && data.source.weights['' + data.target.id]) || 5)
         return data
       },
       nameRequired: function () {
