@@ -44,10 +44,24 @@ script.addEventListener('load', function () {
     domSelector: '#root',
     maxLevel: 3,
     nodeRenderer,
+    velocityDecay: 0.2,
+    charge: function (manyBody) {
+      return manyBody.strength(-500)
+    },
+    collide: function (collide) {
+      return collide.radius(50).iterations(2)
+    },
+    forceX: function (force) {
+      return force.strength(0.05)
+    },
+    forceY: function (force) {
+      return force.strength(0.05)
+    },
     handlers: {
       prepare,
       prepareLink: function (data) {
-        data.distance = 500 / ((data.source.weights && data.source.weights['' + data.target.id]) || 5)
+        data.width = 2
+        data.distance = 1000 - ((data.source.weights && data.source.weights['' + data.target.id]) || 5)
         return data
       },
       nameRequired: function () {

@@ -20,7 +20,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "js-netvis": "^5.9.1",
+    "js-netvis": "^5.10.0",
     "js-ws-updater": "^1.0.0",
     "yamljs": "^0.3.0"
   },
