@@ -3,6 +3,12 @@ const fs = require('fs')
 const path = require('path')
 const YAML = require('yamljs')
 
+if (!fs.existsSync('data')) {
+  fs.mkdir('data')
+}
+
+const stream = fs.createWriteStream(path.resolve('data', 'changes.yaml'), {flags:'a'})
+
 class DataCollector {
   constructor() {
     this.store = null
@@ -29,12 +35,12 @@ class DataCollector {
     })
   }
 
-  async get(source) {
+  async get() {
     if (!this.store) {
-      const list = await this.readDir(path.join(__dirname, source))
-      this.store = list.map(file => YAML.load(file))
+      const initFile = process.env.INIT_FILE || path.join(__dirname, 'public', 'data.json')
+      this.store = JSON.parse(fs.readFileSync(initFile).toString())
     }
-    return this.store
+    return this.store.nodes
   }
 
   async saveNodeChanges(id, change) {
@@ -42,18 +48,10 @@ class DataCollector {
     const node = nodes.find(n => n.id === +id)
     if (node) {
       Object.keys(change).forEach(name => node[name] = change[name])
-      fs.writeFileSync(path.join(__dirname, 'data', id + '.yaml'), YAML.stringify(node))
+      stream.write(YAML.stringify([node]))
     }
     this.notifyListeners({type: 'update', node})
     return node
-  }
-
-  async initializeFromData() {
-    const initFile = process.env.INIT_FILE || path.join(__dirname, 'public', 'data.json')
-    const data = JSON.parse(fs.readFileSync(initFile).toString())
-    data.nodes.forEach(node => {
-      fs.writeFileSync(path.join(__dirname, 'data', node.id + '.yaml'), YAML.stringify(node))
-    })
   }
 }
 

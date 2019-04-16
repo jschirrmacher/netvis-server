@@ -18,14 +18,6 @@ See https://assistify.github.io/netvis-server/public/ for an example.
 
 Simply `git clone https://github.com/assistify/netvis-server.git`
 
-## Static use
-
-Open the file `/public/index.html` in your browser to see a view-only version.
-It is fully interactive, but cannot be edited.
-This is only possible with the server variant.
-
-To change the data to be displayed, change the `/public/data.json` file.
-
 ## Install and start server
 
 If you want to change the content interactively,

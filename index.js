@@ -10,10 +10,6 @@ const logger = console
 
 new WSUpdater({app, route: '/feed', modelListener: dataCollector, expressWs: require('express-ws')})
 
-if (!fs.existsSync('data')) {
-  fs.mkdir('data', () => dataCollector.initializeFromData())
-}
-
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
