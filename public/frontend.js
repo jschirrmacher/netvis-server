@@ -44,7 +44,7 @@ script.addEventListener('load', function () {
     domSelector: '#root',
     maxLevel: 3,
     nodeRenderer,
-    velocityDecay: 0.02,
+    velocityDecay: 0.55,
     charge: function (manyBody) {
       return manyBody.strength(-100)
     },
