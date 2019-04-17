@@ -18,25 +18,11 @@ app.use(bodyParser.json())
 const PORT = process.env.PORT || 3000
 
 app.use((req, res, next) => {
-    console.log(`${req.method} ${req.path}`)   // eslint-disable-line no-console
-    next()
+  logger.debug(`${req.method} ${req.path}`)   // eslint-disable-line no-console
+  next()
 })
 
-function sendNodes(source, res) {
-  const calculateFields = node => {
-    if (node.type === 'topic') {
-      node.fontSize = node.links ? Math.sqrt(Object.keys(node.links).reduce((s, k) => s + node.links[k].length, 0)) : 1
-    }
-    return node
-  }
-
-  dataCollector
-    .get(source)
-    .then(nodes => nodes.map(calculateFields))
-    .then(nodes => res.json({nodes}))
-}
-
-function sendIndex(req, res){
+function sendIndex(req, res) {
   const indexFile = fs.readFileSync(path.join(__dirname, 'public', 'index.html')).toString()
   res.send(indexFile.replace(' data-static="true"', ''))
 }
@@ -45,16 +31,25 @@ app.use('/UpdateListener.js', express.static(path.join(__dirname, 'node_modules'
 app.use('/netvis', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist')))
 app.get('/', sendIndex)
 
-MongoDB('mongodb://localhost:27017', 'open')
+const client = 'business-hub'
+
+MongoDB('mongodb://localhost:27017', client)
   .then(async db => {
-    const users = await db.users.find({}, {username: 1})
+    const users = (await db.users.find({}, {username: 1}))
+      .map(user => Object.assign(user, {username: user.username || user.name}))
+
     const persons = await Promise.all(users.map(async user => {
       const rooms = await db.rocketchat_room.find({t: 'd', usernames: user.username})
       const relevantRooms = rooms.filter(room => room.usernames.some(name => name !== user.username))
       const convPartners = relevantRooms.map(room => {
-          const person = room.usernames.find(name => name !== user.username);
+          const partnerName = room.usernames.find(name => name !== user.username)
+          const partner = users.find(user => user.username === partnerName)
+          if (!partner) {
+            logger.error('Partner ' + partnerName + ' not found in users list')
+            return {msgs: 0}
+          }
           return {
-            id: users.find(user => user.username === person)._id,
+            id: partner._id,
             msgs: room.msgs
           }
         })
@@ -64,12 +59,12 @@ MongoDB('mongodb://localhost:27017', 'open')
         name: user.name,
         type: 'person',
         shape: 'circle',
-        radius: rooms.length * 5 + 1,
+        radius: Math.sqrt(rooms.length * 5) + 1,
         links: {
           persons: convPartners.map(person => person.id)
         },
         weights: Object.assign({}, ...convPartners.map(person => ({[person.id]: person.msgs}))),
-        url: 'https://open.assistify.noncd.db.de/direct/' + user.username,
+        url: 'https://' + client + '.assistify.noncd.db.de/direct/' + user.username,
         visible: !['diarybot', 'assistify', 'assistify.admin', 'rocket.cat'].includes(user.username)
       })
     }))
