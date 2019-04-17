@@ -7,6 +7,7 @@ const DataCollector = require('./DataCollector')
 const dataCollector = new DataCollector()
 const WSUpdater = require('js-ws-updater')
 const logger = console
+const MongoDB = require('./MongoDB')({logger})
 
 new WSUpdater({app, route: '/feed', modelListener: dataCollector, expressWs: require('express-ws')})
 
@@ -44,31 +45,42 @@ app.use('/UpdateListener.js', express.static(path.join(__dirname, 'node_modules'
 app.use('/netvis', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist')))
 app.get('/', sendIndex)
 
-app.get('/persons', (req, res) => sendNodes('data', res))
-app.get('/topics', (req, res) => sendNodes('data', res))
-app.put('/nodes/:id', (req, res) => res.json(dataCollector.saveNodeChanges(req.params.id, req.body)))
+MongoDB('mongodb://localhost:27017', 'open')
+  .then(async db => {
+    const users = await db.users.find({}, {username: 1})
+    const persons = users.map(user => ({
+      id: user._id,
+      name: user.username,
+      type: 'person',
+      shape: 'circle'
+    }))
 
-app.use(express.static(path.join(__dirname, 'public')))
+    app.get('/persons', (req, res) => res.json({nodes: persons}))
+    // app.get('/topics', (req, res) => sendNodes('data', res))
+    // app.put('/nodes/:id', (req, res) => res.json(dataCollector.saveNodeChanges(req.params.id, req.body)))
 
-app.use((req, res, next) => {
-  next({code: 404, message: `Route ${req.method} ${req.path} not found`})
-})
+    app.use(express.static(path.join(__dirname, 'public')))
 
-app.use((err, req, res, next) => {  // eslint-disable-line
-  logger.error(err)
+    app.use((req, res, next) => {
+      next({code: 404, message: `Route ${req.method} ${req.path} not found`})
+    })
 
-  const result = {
-    code: err.code,
-    message: err.message
-  }
+    app.use((err, req, res, next) => {  // eslint-disable-line
+      logger.error(err)
 
-  if (process.env.NODE_ENV === 'development') {
-    result.error = err
-  }
+      const result = {
+        code: err.code,
+        message: err.message
+      }
 
-  res.status(err.code || 500).json(result)
-})
+      if (process.env.NODE_ENV === 'development') {
+        result.error = err
+      }
 
-app.listen(PORT, () => {
-  console.log(`Listening on http://localhost:${PORT}`) // eslint-disable-line no-console
-})
+      res.status(err.code || 500).json(result)
+    })
+
+    app.listen(PORT, () => {
+      console.log(`Listening on http://localhost:${PORT}`) // eslint-disable-line no-console
+    })
+  })

@@ -20,8 +20,9 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "js-netvis": "^5.10.0",
+    "js-netvis": "^5.10.1",
     "js-ws-updater": "^1.0.0",
+    "mongodb": "^3.2.3",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
