@@ -48,11 +48,30 @@ app.get('/', sendIndex)
 MongoDB('mongodb://localhost:27017', 'open')
   .then(async db => {
     const users = await db.users.find({}, {username: 1})
-    const persons = users.map(user => ({
-      id: user._id,
-      name: user.username,
-      type: 'person',
-      shape: 'circle'
+    const persons = await Promise.all(users.map(async user => {
+      const rooms = await db.rocketchat_room.find({t: 'd', usernames: user.username})
+      const relevantRooms = rooms.filter(room => room.usernames.some(name => name !== user.username))
+      const convPartners = relevantRooms.map(room => {
+          const person = room.usernames.find(name => name !== user.username);
+          return {
+            id: users.find(user => user.username === person)._id,
+            msgs: room.msgs
+          }
+        })
+        .filter(info => info.msgs > 0)
+      return ({
+        id: user._id,
+        name: user.name,
+        type: 'person',
+        shape: 'circle',
+        radius: rooms.length * 5 + 1,
+        links: {
+          persons: convPartners.map(person => person.id)
+        },
+        weights: Object.assign({}, ...convPartners.map(person => ({[person.id]: person.msgs}))),
+        url: 'https://open.assistify.noncd.db.de/direct/' + user.username,
+        visible: !['diarybot', 'assistify', 'assistify.admin', 'rocket.cat'].includes(user.username)
+      })
     }))
 
     app.get('/persons', (req, res) => res.json({nodes: persons}))
