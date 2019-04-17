@@ -46,7 +46,7 @@ script.addEventListener('load', function () {
     nodeRenderer,
     velocityDecay: 0.55,
     charge: function (manyBody) {
-      return manyBody.strength(-100)
+      return manyBody.strength(-5000)
     },
     collide: function (collide) {
       return collide.radius(30)

@@ -59,7 +59,7 @@ MongoDB('mongodb://localhost:27017', client)
         name: user.name,
         type: 'person',
         shape: 'circle',
-        radius: Math.sqrt(rooms.length * 5) + 1,
+        radius: Math.sqrt(rooms.length * 20) + 10,
         links: {
           persons: convPartners.map(person => person.id)
         },
@@ -68,6 +68,7 @@ MongoDB('mongodb://localhost:27017', client)
         visible: !['diarybot', 'assistify', 'assistify.admin', 'rocket.cat'].includes(user.username)
       })
     }))
+    logger.info('Data read from database - ready to retrieve it!')
 
     app.get('/persons', (req, res) => res.json({nodes: persons}))
     // app.get('/topics', (req, res) => sendNodes('data', res))
