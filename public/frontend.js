@@ -34,7 +34,7 @@ script.addEventListener('load', function () {
     })
     const base = '?' + (sourceMatch ? 'u=' + sourceMatch[2] + '&' : '')
     const createOption = type => icons[type + 's'] ? {type, text: icons[type + 's'] + ' ' + texts[type + 's']} : null
-    const createLink = o => '<a href="' + base + o.type + '">' + o.text + '</a>'
+    const createLink = o => '<a href="' + base + 't=' + o.type + '">' + o.text + '</a>'
     const options = Object.keys(types).map(createOption).filter(d => d)
     document.querySelector('.selection').innerHTML = options.length > 1 ? options.map(createLink).join('\n') : ''
     return data
