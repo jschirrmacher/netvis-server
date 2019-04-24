@@ -18,9 +18,10 @@ script.addEventListener('load', function () {
     topics: '💬',
     subtopics: '💬',
     interestedParties: '👤',
-    persons: '👤'
+    persons: '👤',
+    rooms: ' '
   }
-  const nodeRenderer = new NodeRenderer({lshowRefLinks: true})
+  const nodeRenderer = new NodeRenderer({showRefLinks: true})
   nodeRenderer.renderRefLinksContent = function (enter) {
     enter.text(d => icons[d.type])
   }
