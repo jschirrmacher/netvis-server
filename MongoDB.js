@@ -1,3 +1,4 @@
+/*eslint-env node*/
 module.exports = function ({logger}) {
   const MongoClient = require('mongodb').MongoClient
 
@@ -24,6 +25,17 @@ module.exports = function ({logger}) {
                         reject(err)
                       }
                       resolve(docs)
+                    })
+                  })
+                },
+
+                findWithCursor(where, fields) {
+                  return new Promise((resolve, reject) => {
+                    db.collection(collection.name).find(where, fields, (err, resultCursor) => {
+                      if (err) {
+                        reject(err)
+                      }
+                      resolve(resultCursor)
                     })
                   })
                 }

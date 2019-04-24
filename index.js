@@ -33,11 +33,94 @@ app.get('/', sendIndex)
 
 const client = 'business-hub'
 
+const filterWords = [
+  'ich', 'du', 'er', 'sie', 'es', 'wir', 'der', 'die', 'das', 'dem', 'ja', 'nein', 'zu', 'auch', 'kein', 'keine',
+  'ist', 'hat', 'auf', 'nicht', 'von', 'ein', 'eine', 'einen', 'und', 'dass', 'aber', 'kann', 'dazu', 'dann', 'noch',
+  'wenn', 'habe', 'mehr', 'nur', 'dir', 'mir', 'in', 'den', 'bitte', 'nach', 'werden', 'wird', 'machen', 'bzw', 'mit',
+  'ihr', 'da', 'jetzt', 'bald', 'alles', 'danke', 'ohne', 'innerhalb', 'also', 'mehr', 'schon', 'wo', 'wer', 'wie',
+  'warum', 'am', 'so', 'dich', 'gibt', 'diesen', 'bereits', 'oder', 'hier', 'um', 'im', 'an', 'sich', 'dort', 'bei',
+  'was', 'deine', 'denn', 'hier', 'für', 'man', 'wieder', 'haben', 'sind', 'mal', 'uns', 'über', 'hallo', 'aus', 'des',
+  'euch', 'gerade', 'geht', 'muss', 'sein', 'zur', 'können', 'zum', 'mich', 'alle', 'ok', 'als', 'gerne', 'kannst',
+  'war', 'neu', 'nun', 'hab', 'jemand', 'würde', 'nochmal', 'immer', 'habt', 'kommt', 'wäre', 'unsere', 'sollte',
+  'wurde', 'woher', 'dank', 'vielen', 'hi', 'benötigt', 'leider', 'unser', 'gleich', 'gleiche', 'soll', 'andere',
+  'anderen', 'einem', 'allerdings', 'ob', 'hast', 'diese', 'vielen', 'anscheinend', 'durch', 'kurz', 'mittlerweile',
+  'deshalb', 'darum', 'dafür', 'hätte', 'würdest', 'sehr', 'zusammen', 'erreichen', 'fehlt', 'irgendwie', 'brauchen',
+  'vom', 'dran', 'bin', 'etwas', 'beim', 'könnte', 'morgen', 'heute', 'gestern', 'damit'
+]
+
 MongoDB('mongodb://localhost:27017', client)
   .then(async db => {
     const users = (await db.users.find({}, {username: 1}))
       .map(user => Object.assign(user, {username: user.username || user.name}))
-    const rooms = await db.rocketchat_room.find()
+    const rooms = await db.rocketchat_room.find({t: 'c'})
+    const roomWords = Object.assign({}, ...rooms.map(room => ({[room._id]: {}})))
+
+    const cursor = await db.rocketchat_message.findWithCursor({}, {msg: 1, rid: 1})
+    while(await cursor.hasNext()) {
+      const doc = await cursor.next()
+      if (doc.msg && roomWords[doc.rid]) {
+        doc.msg.split(' ')
+          .map(word => word.replace(/[^A-Za-z\u00C0-\u017F]/g, ''))
+          .filter(word => !word.match(/^\d*$/))
+          .filter(word => !filterWords.includes(word.toLowerCase()))
+          .map(word => {
+            roomWords[doc.rid] = roomWords[doc.rid] || {}
+            roomWords[doc.rid][word] = roomWords[doc.rid][word] || 0
+            roomWords[doc.rid][word]++
+          })
+      }
+    }
+    const words = {}
+    Object.keys(roomWords).forEach(roomId => {
+      roomWords[roomId] = Object.keys(roomWords[roomId])
+        .map(word => ({word, num: roomWords[roomId][word]}))
+        .sort((a, b) => b.num - a.num)
+        .slice(0, 10)
+      roomWords[roomId].forEach(e => {
+        words[e.word] = (words[e.word] || 0) + e.num
+      })
+    })
+
+    const nodes = []
+    Object.keys(words).forEach(word => {
+      nodes.push({
+        id: 'w_' + word,
+        name: word,
+        type: 'topic',
+        links: {
+          rooms: []
+        }
+      })
+    })
+
+    rooms.forEach(room => {
+      const topics = roomWords[room._id].map(info => {
+        const id = 'w_' + info.word;
+        const node = nodes.find(n => n.id === id)
+        if (node) {
+          node.links.rooms.push(room._id)
+        }
+        return id
+      })
+      const width = Math.sqrt(room.usersCount * 50) + 10
+      if (room.parentRoomId && !rooms.find(r => r._id === room.parentRoomId)) {
+        delete room.parentRoomId
+      }
+      const node = {
+        id: room._id,
+        name: room.name,
+        type: 'room',
+        shape: 'circle',
+        width,
+        height: width * 0.7,
+        url: 'https://' + client + '.assistify.noncd.db.de/channel/' + room.name,
+        links: {topics}
+      }
+      if (room.parentRoomId) {
+        node.links.parents = [room.parentRoomId]
+      }
+      nodes.push(node)
+    })
 
     async function getConnectedPersons() {
       return await Promise.all(users.map(async user => {
@@ -72,32 +155,8 @@ MongoDB('mongodb://localhost:27017', client)
       }))
     }
 
-    async function getRooms() {
-      const relevantRooms = rooms.filter(room => room.t === 'c')
-      return relevantRooms
-        .map(room => {
-          const width = Math.sqrt(room.usersCount * 50) + 10
-          if (room.parentRoomId && !relevantRooms.find(r => r._id === room.parentRoomId)) {
-            delete room.parentRoomId
-          }
-          const node = {
-            id: room._id,
-            name: room.name,
-            type: 'room',
-            shape: 'rect',
-            width,
-            height: width * 0.7,
-            url: 'https://' + client + '.assistify.noncd.db.de/channel/' + room.name
-          }
-          if (room.parentRoomId) {
-            node.links = {parents: [room.parentRoomId]}
-          }
-          return node
-        })
-    }
-
     app.get('/persons', async (req, res) => res.json({nodes: await getConnectedPersons()}))
-    app.get('/rooms', async (req, res) => res.json({nodes: await getRooms()}))
+    app.get('/rooms', async (req, res) => res.json({nodes}))
     // app.put('/nodes/:id', (req, res) => res.json(dataCollector.saveNodeChanges(req.params.id, req.body)))
 
     app.use(express.static(path.join(__dirname, 'public')))
@@ -122,6 +181,6 @@ MongoDB('mongodb://localhost:27017', client)
     })
 
     app.listen(PORT, () => {
-      console.log(`Listening on http://localhost:${PORT}`) // eslint-disable-line no-console
+      logger.info(`Listening on http://localhost:${PORT}`)
     })
   })

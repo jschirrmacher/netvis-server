@@ -19,7 +19,7 @@ script.addEventListener('load', function () {
     subtopics: '💬',
     interestedParties: '👤',
     persons: '👤',
-    rooms: ' '
+    rooms: '🚪'
   }
   const nodeRenderer = new NodeRenderer({showRefLinks: true})
   nodeRenderer.renderRefLinksContent = function (enter) {
