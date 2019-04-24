@@ -48,6 +48,7 @@ const filterWords = [
   'vom', 'dran', 'bin', 'etwas', 'beim', 'könnte', 'morgen', 'heute', 'gestern', 'damit'
 ]
 
+const startTime = +new Date()
 MongoDB('mongodb://localhost:27017', client)
   .then(async db => {
     const users = (await db.users.find({}, {username: 1}))
@@ -60,9 +61,10 @@ MongoDB('mongodb://localhost:27017', client)
       const doc = await cursor.next()
       if (doc.msg && roomWords[doc.rid]) {
         doc.msg.split(' ')
-          .map(word => word.replace(/[^A-Za-z\u00C0-\u017F]/g, ''))
-          .filter(word => !word.match(/^\d*$/))
-          .filter(word => !filterWords.includes(word.toLowerCase()))
+          .filter(word => !word.match(/^@/))    // filter user names
+          .map(word => word.replace(/[^A-Za-z\u00C0-\u017F]/g, ''))   // remove non-alpha-chars
+          .filter(word => !word.match(/^\d*$/))   // filter numbers
+          .filter(word => !filterWords.includes(word.toLowerCase()))    // filter stopwords
           .map(word => {
             roomWords[doc.rid] = roomWords[doc.rid] || {}
             roomWords[doc.rid][word] = roomWords[doc.rid][word] || 0
@@ -102,7 +104,7 @@ MongoDB('mongodb://localhost:27017', client)
         }
         return id
       })
-      const width = Math.sqrt(room.usersCount * 50) + 10
+      const radius = Math.sqrt(room.usersCount * 25) + 10
       if (room.parentRoomId && !rooms.find(r => r._id === room.parentRoomId)) {
         delete room.parentRoomId
       }
@@ -111,8 +113,7 @@ MongoDB('mongodb://localhost:27017', client)
         name: room.name,
         type: 'room',
         shape: 'circle',
-        width,
-        height: width * 0.7,
+        radius,
         url: 'https://' + client + '.assistify.noncd.db.de/channel/' + room.name,
         links: {topics}
       }
@@ -120,6 +121,19 @@ MongoDB('mongodb://localhost:27017', client)
         node.links.parents = [room.parentRoomId]
       }
       nodes.push(node)
+    })
+
+    nodes.forEach(n => {
+      if (n.type === 'topic') {
+        const size = Math.sqrt(n.links.rooms.length * 100) + 100
+        n.width = size
+        n.height = size * 0.7
+        n.fontSize = Math.sqrt(n.links.rooms.length)
+        if (n.links.rooms.length > 2) {
+          n.visible = true
+          n.shape = 'rect'
+        }
+      }
     })
 
     async function getConnectedPersons() {
@@ -157,6 +171,7 @@ MongoDB('mongodb://localhost:27017', client)
 
     app.get('/persons', async (req, res) => res.json({nodes: await getConnectedPersons()}))
     app.get('/rooms', async (req, res) => res.json({nodes}))
+    app.get('/topics', async (req, res) => res.json({nodes}))
     // app.put('/nodes/:id', (req, res) => res.json(dataCollector.saveNodeChanges(req.params.id, req.body)))
 
     app.use(express.static(path.join(__dirname, 'public')))
@@ -182,5 +197,6 @@ MongoDB('mongodb://localhost:27017', client)
 
     app.listen(PORT, () => {
       logger.info(`Listening on http://localhost:${PORT}`)
+      logger.info('Startup time: ' + (+new Date() - startTime)/1000 + 'sec.')
     })
   })
