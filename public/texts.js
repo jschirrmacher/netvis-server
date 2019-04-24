@@ -7,7 +7,7 @@ const allTexts = {
     "interestedParties": "Interessierte Personen",
     "rooms": "Räume",
     "linkTitle": "{{title}} anzeigen",
-    "defaultDescription": "Es gibt aktuell noch keine Beschreibung zu diesem Eintrag. Informationen könntest du in [GitHub](https://github.com/jschirrmacher/netvis-server/blob/master/public/data.json) ergänzen."
+    "defaultDescription": "Es gibt aktuell noch keine Beschreibung zu diesem Eintrag."
   },
   "en": {
     "persons": "Persons",
@@ -15,7 +15,7 @@ const allTexts = {
     "interestedParties": "interested Parties",
     "rooms": "Rooms",
     "linkTitle": "Show {{title}}",
-    "defaultDescription": "There is no description for this entry yet. You could add them in [GitHub](https://github.com/jschirrmacher/netvis-server/blob/master/public/data.json)."
+    "defaultDescription": "There is no description for this entry yet."
   }
 }
 const texts = allTexts[lang] || allTexts[lang.substr(0, 2)] || allTexts[defaultLang]
