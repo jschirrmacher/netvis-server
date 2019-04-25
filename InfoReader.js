@@ -1,6 +1,9 @@
 /* eslint-env node */
 
-const filterWords = require('./filterwords')
+const filterWords = [
+  ...require('stopwords-de'),
+  ...require('stopwords-en')
+]
 
 module.exports = async function (db, client) {
   const rooms = await db.rocketchat_room.find({t: 'c'})
