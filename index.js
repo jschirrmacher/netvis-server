@@ -45,7 +45,11 @@ const filterWords = [
   'wurde', 'woher', 'dank', 'vielen', 'hi', 'benötigt', 'leider', 'unser', 'gleich', 'gleiche', 'soll', 'andere',
   'anderen', 'einem', 'allerdings', 'ob', 'hast', 'diese', 'vielen', 'anscheinend', 'durch', 'kurz', 'mittlerweile',
   'deshalb', 'darum', 'dafür', 'hätte', 'würdest', 'sehr', 'zusammen', 'erreichen', 'fehlt', 'irgendwie', 'brauchen',
-  'vom', 'dran', 'bin', 'etwas', 'beim', 'könnte', 'morgen', 'heute', 'gestern', 'damit'
+  'vom', 'dran', 'bin', 'etwas', 'beim', 'könnte', 'morgen', 'heute', 'gestern', 'damit', 'schreiben', 'zugreifen',
+  'bzgl', 'doch', 'evtl', 'gut', 'will', 'benötigen', 'dies', 'klar', 'kleiner', 'könnt', 'lassen', 'gesagt', 'wurden',
+  'vorher', 'betrifft', 'erste', 'je', 'erstmal', 'weder', 'ggf', 'unter', 'scheint', 'zwischen', 'bis', 'läuft',
+  'nichts', 'läuft',
+  'you', 'the', 'and', 'to', 'for', 'true', 'false', 'is', 'we', 'not', 'no'
 ]
 
 const startTime = +new Date()
@@ -59,12 +63,14 @@ MongoDB('mongodb://localhost:27017', client)
     const cursor = await db.rocketchat_message.findWithCursor({}, {msg: 1, rid: 1})
     while(await cursor.hasNext()) {
       const doc = await cursor.next()
-      if (doc.msg && roomWords[doc.rid]) {
+      if (doc.msg && roomWords[doc.rid] && doc.t !== 'uj') {
         doc.msg.split(' ')
           .filter(word => !word.match(/^@/))    // filter user names
-          .map(word => word.replace(/[^A-Za-z\u00C0-\u017F]/g, ''))   // remove non-alpha-chars
+          .filter(word => !word.match(/^http?s:\/\//))
+          .map(word => word.replace(/[^A-Za-z\u00C0-\u017F]/g, '').toLowerCase())   // remove non-alpha-chars
+          .filter(word => word.length > 1)
           .filter(word => !word.match(/^\d*$/))   // filter numbers
-          .filter(word => !filterWords.includes(word.toLowerCase()))    // filter stopwords
+          .filter(word => !filterWords.includes(word))    // filter stopwords
           .map(word => {
             roomWords[doc.rid] = roomWords[doc.rid] || {}
             roomWords[doc.rid][word] = roomWords[doc.rid][word] || 0
@@ -77,7 +83,7 @@ MongoDB('mongodb://localhost:27017', client)
       roomWords[roomId] = Object.keys(roomWords[roomId])
         .map(word => ({word, num: roomWords[roomId][word]}))
         .sort((a, b) => b.num - a.num)
-        .slice(0, 10)
+        .slice(0, 15)
       roomWords[roomId].forEach(e => {
         words[e.word] = (words[e.word] || 0) + e.num
       })
@@ -104,7 +110,7 @@ MongoDB('mongodb://localhost:27017', client)
         }
         return id
       })
-      const radius = Math.sqrt(room.usersCount * 25) + 10
+      const radius = Math.sqrt(room.usersCount * 10) + 20
       if (room.parentRoomId && !rooms.find(r => r._id === room.parentRoomId)) {
         delete room.parentRoomId
       }
@@ -125,14 +131,12 @@ MongoDB('mongodb://localhost:27017', client)
 
     nodes.forEach(n => {
       if (n.type === 'topic') {
-        const size = Math.sqrt(n.links.rooms.length * 100) + 100
+        const size = Math.sqrt(n.links.rooms.length * 200) + 100
         n.width = size
         n.height = size * 0.7
-        n.fontSize = Math.sqrt(n.links.rooms.length)
-        if (n.links.rooms.length > 2) {
-          n.visible = true
-          n.shape = 'rect'
-        }
+        n.fontSize = Math.sqrt(n.links.rooms.length * 2)
+        n.visible = n.links.rooms.length > 5
+        n.shape = 'rect'
       }
     })
 

@@ -47,16 +47,16 @@ script.addEventListener('load', function () {
     nodeRenderer,
     velocityDecay: 0.55,
     charge: function (manyBody) {
-      return manyBody.strength(-5000)
+      return manyBody.strength(-1000)
     },
     collide: function (collide) {
-      return collide.radius(30)
+      return collide.radius(d => (d.radius || d.width) * 1.1)
     },
     forceX: function (force) {
-      return force.strength(0.001)
+      return force.strength(0.1)
     },
     forceY: function (force) {
-      return force.strength(0.001)
+      return force.strength(0.1)
     },
     handlers: {
       prepare,
