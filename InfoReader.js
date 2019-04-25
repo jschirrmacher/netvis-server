@@ -67,7 +67,8 @@ module.exports = async function (db, client) {
       shape: 'circle',
       radius,
       url: 'https://' + client + '.assistify.noncd.db.de/channel/' + room.name,
-      links: {topics}
+      links: {topics},
+      visibility: Math.sqrt(room.usersCount)
     }
     if (room.parentRoomId) {
       node.links.parents = [room.parentRoomId]
@@ -80,8 +81,8 @@ module.exports = async function (db, client) {
       const size = Math.sqrt(n.links.rooms.length * 200) + 100
       n.width = size
       n.height = size * 0.7
-      n.fontSize = Math.sqrt(n.links.rooms.length * 2)
-      n.visible = n.links.rooms.length > 5
+      n.fontSize = Math.sqrt(n.links.rooms.length * 3) / 2
+      n.visibility = n.links.rooms.length
       n.shape = 'rect'
     }
   })

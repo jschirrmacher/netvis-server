@@ -9,6 +9,7 @@ const sourceMatch = location.search.match(/\b(u=([^&]+))/)
 const name = sourceMatch ? sourceMatch[2] : runsStatic ? 'data.json' : type + 's'
 const linkTitle = Handlebars.compile(texts.linkTitle)
 const logger = console
+const thresholdField = document.getElementById('threshold')
 
 let network
 
@@ -28,9 +29,10 @@ script.addEventListener('load', function () {
 
   function prepare(data) {
     const types = {}
+    thresholdField.value = Math.ceil(data.nodes.length / 200)
     data.nodes = data.nodes.map(node => {
       types[node.type] = true
-      return Object.assign(node, {visible: typeof node.visible === 'boolean' ? node.visible : node.type === type})
+      return Object.assign(node, {visible: node.visibility >= thresholdField.value})
     })
     const base = '?' + (sourceMatch ? 'u=' + sourceMatch[2] + '&' : '')
     const createOption = type => icons[type + 's'] ? {type, text: icons[type + 's'] + ' ' + texts[type + 's']} : null
@@ -105,6 +107,25 @@ script.addEventListener('load', function () {
     }
   })
 
+  thresholdField.addEventListener('change', () => {
+    const nodes2Remove = []
+    const nodes2Show = []
+    network.nodes.forEach(n => {
+      const newVisibility = n.visibility >= thresholdField.value
+      if (n.visible !== newVisibility) {
+        if (n.visible) {
+          nodes2Remove.push(n)
+        } else {
+          nodes2Show.push(n)
+        }
+      }
+      n.visible = newVisibility
+    })
+    network.diagram.remove(nodes2Remove, [])
+    network.diagram.add(nodes2Show, [])
+    network.update()
+  })
+
   const interpreter = {
     notify: (msg) => {
       switch (msg.type) {
@@ -139,14 +160,3 @@ script.addEventListener('load', function () {
 })
 script.src = runsStatic ? 'https://jschirrmacher.github.io/netvis/dist/bundle.js' : 'netvis/bundle.js'
 document.body.appendChild(script)
-
-document.addEventListener('input', function (event) {
-  const body = JSON.stringify({[event.target.dataset.name]: event.target.innerHTML})
-  const headers = {'Content-Type': 'application/json'}
-  const path = event.path || (event.composedPath && event.composedPath()) || []
-  const idElement = path.find(el => el.dataset.id)
-  if (idElement) {
-    fetch('nodes/' + idElement.dataset.id, {method: 'PUT', body, headers})
-      .catch(logger.error)
-  }
-})
