@@ -7,6 +7,7 @@ module.exports = function ({logger}) {
       MongoClient.connect(mongoURL, {useNewUrlParser: true}, function (err, client) {
         if (err) {
           reject(err)
+          return
         }
         const db = client.db(dbName)
         logger.info(`Successfully logged into MongoDB '${dbName}'`)
