@@ -33,16 +33,19 @@ app.get('/', sendIndex)
 
 const client = 'business-hub'
 
-const InfoReader = require('./InfoReader')
-
 const startTime = +new Date()
 MongoDB('mongodb://localhost:27017', client)
   .then(async db => {
-    const nodes = await InfoReader(db)
+    const RoomReader = require('./RoomInfoReader')({db, client, logger})
+    const UserReader = require('./UserInfoReader')({db, client, logger})
 
-    app.get('/rooms', async (req, res) => res.json({nodes}))
-    app.get('/topics', async (req, res) => res.json({nodes}))
+    const roomsWithTopics = await RoomReader.getRoomsWithTopics()
+    const persons = await UserReader.getConnectedPersons()
+
+    app.get('/rooms', async (req, res) => res.json({nodes: roomsWithTopics}))
+    app.get('/topics', async (req, res) => res.json({nodes: roomsWithTopics}))
     // app.put('/nodes/:id', (req, res) => res.json(dataCollector.saveNodeChanges(req.params.id, req.body)))
+    app.get('/persons', async (req, res) => res.json({nodes: persons}))
 
     app.use(express.static(path.join(__dirname, 'public')))
 
