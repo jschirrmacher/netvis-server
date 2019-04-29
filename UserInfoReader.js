@@ -1,10 +1,12 @@
 /* eslint-env node */
 
+const faker = require('faker')
+
 module.exports = ({db, client, logger}) => {
   return {
     async getConnectedPersons() {
       const users = (await db.users.find({}, {username: 1}))
-        .map(user => Object.assign(user, {username: user.username || user.name}))
+        .map(user => Object.assign(user, {username: user.username || user.name, fake_name: faker.name.findName()}))
 
       return await Promise.all(users.map(async user => {
         const rooms = await db.rocketchat_room.find({t: 'd', usernames: user.username})
@@ -22,9 +24,11 @@ module.exports = ({db, client, logger}) => {
             }
           })
           .filter(info => info.msgs > 0)
+
+        const isSys = ['diarybot', 'assistify', 'assistify.admin', 'rocket.cat'].includes(user.username)
         return ({
           id: user._id,
-          name: user.name,
+          name: user.fake_name,
           type: 'person',
           shape: 'circle',
           radius: Math.sqrt(rooms.length * 20) + 10,
@@ -32,9 +36,9 @@ module.exports = ({db, client, logger}) => {
             persons: convPartners.map(person => person.id)
           },
           weights: Object.assign({}, ...convPartners.map(person => ({[person.id]: person.msgs}))),
-          url: 'https://' + client + '.assistify.noncd.db.de/direct/' + user.username,
-          visible: !['diarybot', 'assistify', 'assistify.admin', 'rocket.cat'].includes(user.username),
-          visibility: Math.sqrt(convPartners.length)
+          url: 'https://' + client + '.assistify.noncd.db.de/direct/' + user.fake_name,
+          visible: !isSys,
+          visibility: isSys ? 0 : Math.sqrt(convPartners.length)
         })
       }))
     }
