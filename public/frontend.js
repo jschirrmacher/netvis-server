@@ -134,16 +134,19 @@ script.addEventListener('load', function () {
           network.update()
           break
 
-        case 'create':
+        case 'add':
           network.addNode(msg.node)
+          network.update()
           break
 
         case 'delete':
           network.removeNode(msg.node)
+          network.update()
           break
 
-        case 'update':
+        case 'change':
           network.updateNode(msg.node)
+          network.update()
           break
       }
     }

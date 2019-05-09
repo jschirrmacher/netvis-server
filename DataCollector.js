@@ -9,9 +9,9 @@ if (!fs.existsSync('data')) {
 
 const stream = fs.createWriteStream(path.resolve('data', 'changes.yaml'), {flags:'a'})
 
-class DataCollector {
+module.exports = class DataCollector {
   constructor() {
-    this.store = null
+    this.store = {rooms: [], persons: [], topics: []}
     this.listeners = {}
   }
 
@@ -29,30 +29,43 @@ class DataCollector {
     Object.values(this.listeners).forEach(listener => listener(change))
   }
 
-  readDir(source) {
-    return new Promise((resolve, reject) => {
-      fs.readdir(source, null, (err, result) => err ? reject(err) : resolve(result.map(file => path.join(source, file))))
-    })
-  }
-
-  async get() {
-    if (!this.store) {
-      const initFile = process.env.INIT_FILE || path.join(__dirname, 'public', 'data.json')
-      this.store = JSON.parse(fs.readFileSync(initFile).toString())
+  async getAll() {
+    const nodes = [
+      ...this.store.rooms,
+      ...this.store.persons,
+      ...this.store.topics
+    ]
+    if (nodes.length === 0) {
+      return {nodes: [{id: -1, name: 'No data existing yet'}]}
     }
-    return this.store.nodes
+    return {nodes}
   }
 
-  async saveNodeChanges(id, change) {
-    const nodes = await this.get('data')
-    const node = nodes.find(n => n.id === +id)
+  find(type, node) {
+    return this.store[type + 's'].find(n => n.id === node.id || n.name === node.name)
+  }
+
+  addNode(type, node) {
+    const existing = this.find(type, node)
+    if (existing) {
+      return existing.id
+    }
+    if (!node.id) {
+      node.id = type + '_' + node.name
+    }
+    this.store[type + 's'].push(node)
+    stream.write(YAML.stringify([{ts: new Date(), type: 'add', node}]))
+    this.notifyListeners({type: 'add', node})
+    return node.id
+  }
+
+  async change(id, type, change) {
+    const node = this.store[type].find(n => n.id === +id)
     if (node) {
       Object.keys(change).forEach(name => node[name] = change[name])
-      stream.write(YAML.stringify([node]))
+      stream.write(YAML.stringify([{ts: new Date(), type: 'change', id, change}]))
     }
-    this.notifyListeners({type: 'update', node})
+    this.notifyListeners({type: 'change', node})
     return node
   }
 }
-
-module.exports = DataCollector

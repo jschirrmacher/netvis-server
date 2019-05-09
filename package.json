@@ -24,6 +24,7 @@
     "js-netvis": "^5.10.2",
     "js-ws-updater": "^1.0.0",
     "mongodb": "^3.2.3",
+    "node-fetch": "^2.5.0",
     "stopwords-de": "^0.2.0",
     "stopwords-en": "^0.3.0",
     "yamljs": "^0.3.0"
