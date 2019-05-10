@@ -8,13 +8,14 @@ const path = require('path')
 async function readData(fileName) {
   const data = JSON.parse(fs.readFileSync(fileName).toString())
   const headers = {'content-type': 'application/json'}
-  await Promise.all(Object.keys(data).map(async roomId => {
+  await Object.keys(data).reduce((promise, roomId) => promise.then(async () => {
+    data[roomId].name = 'room_' + roomId
     const body = JSON.stringify(data[roomId])
     const result = await fetch('http://localhost:3000/rooms', {method: 'post', body, headers})
     if (!result.ok) {
       throw {errorCode: result.status, message: await result.json()}
     }
-  }))
+  }), Promise.resolve())
 }
 
 const filename = process.argv[2]
