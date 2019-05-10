@@ -2,7 +2,7 @@ html, body, #root {
   margin: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(#ffffff, #eeffff);
+  background: radial-gradient(#ffffff, #f7f7f7);
   font: 1rem -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: #222222;
   overflow: hidden;
@@ -103,11 +103,16 @@ svg {
 
     rect {
       stroke: none;
+      fill: transparent;
     }
 
-    > rect:first-child + text tspan {
-      font-weight: bold;
-      fill: #666;
+    circle {
+      stroke: none;
+      fill: #eeeeee;
+    }
+
+    circle + .title .text-bg {
+      fill: transparent;
     }
   }
 }
