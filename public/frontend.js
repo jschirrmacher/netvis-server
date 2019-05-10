@@ -3,7 +3,7 @@ const converter = new showdown.Converter()
 const source = document.getElementById('detailForm').innerHTML
 const detailFormTemplate = Handlebars.compile(source)
 const match = location.search.match(/\bt=(\w+)/)
-const type = match ? match[1] : 'person'
+const type = match ? match[1] : 'room'
 const runsStatic = Array.from(document.scripts).find(s => s.attributes.src && s.attributes.src.nodeValue === 'frontend.js').dataset.static
 const sourceMatch = location.search.match(/\b(u=([^&]+))/)
 const name = sourceMatch ? sourceMatch[2] : runsStatic ? 'data.json' : type + 's'
@@ -27,12 +27,28 @@ script.addEventListener('load', function () {
     enter.text(d => icons[d.type])
   }
 
+  function prepareNode(node, threshold) {
+    const weight = Math.sqrt(node.weight)
+    const size = node.weight * 10 + 50
+    node.visible = weight >= threshold
+    node.fontSize = Math.sqrt(weight)
+    if (node.className === 'topic') {
+      node.shape = 'rect'
+      node.width = Math.min(size, 300)
+      node.height = size * 0.7
+    } else {
+      node.shape = 'circle'
+      node.radius = Math.min(node.weight * 50, 150)
+    }
+    return node
+  }
+
   function prepare(data) {
     const types = {}
     thresholdField.value = Math.ceil(data.nodes.length / 200)
     data.nodes = data.nodes.map(node => {
       types[node.type] = true
-      return Object.assign(node, {visible: node.visibility >= thresholdField.value})
+      return prepareNode(node, thresholdField.value)
     })
     const base = '?' + (sourceMatch ? 'u=' + sourceMatch[2] + '&' : '')
     const createOption = type => icons[type + 's'] ? {type, text: icons[type + 's'] + ' ' + texts[type + 's']} : null
@@ -111,7 +127,7 @@ script.addEventListener('load', function () {
     const nodes2Remove = []
     const nodes2Show = []
     network.nodes.forEach(n => {
-      const newVisibility = n.visibility >= thresholdField.value
+      const newVisibility = n.weight >= thresholdField.value
       if (n.visible !== newVisibility) {
         if (n.visible) {
           nodes2Remove.push(n)
@@ -135,7 +151,7 @@ script.addEventListener('load', function () {
           break
 
         case 'add':
-          network.addNode(msg.node)
+          network.addNode(prepareNode(msg.node))
           network.update()
           break
 
@@ -145,7 +161,7 @@ script.addEventListener('load', function () {
           break
 
         case 'change':
-          network.updateNode(msg.node)
+          network.updateNode(prepareNode(msg.node))
           network.update()
           break
       }
