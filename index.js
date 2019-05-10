@@ -73,23 +73,39 @@ function jsonService (func) {
   }
 }
 
+function prepareTopic(node) {
+  const weight = Math.sqrt(node.weight)
+  node.visibility = weight
+  node.fontSize = Math.sqrt(weight)
+  node.className = 'topic'
+  node.shape = 'rect'
+  node.width = weight * 10 + 50
+  node.height = node.width * 0.7
+}
+
+function preparePerson(node) {
+  node.className = 'person'
+  node.shape = 'circle'
+  node.radius = 50
+}
+
+function prepareRoom(node) {
+  node.className = 'room'
+  node.shape = 'circle'
+  node.radius = 50
+}
+
 function addRoom(data) {
   data.links = data.links || {}
   if (data.topics) {
-    data.links.topics = data.topics.map(topic => {
-      const width = Math.sqrt(topic.weight) * 10 + 50
-      const visibility = Math.sqrt(topic.weight)
-      return dataCollector.addNode('topic', Object.assign(topic, {shape: 'rect', width, height: width * 0.7, visibility}))
-    })
+    data.links.topics = data.topics.map(topic => dataCollector.addNode('topic', topic, prepareTopic))
     delete data.topics
   }
   if (data.users) {
-    data.links.persons = data.users.map(person => {
-      return dataCollector.addNode('person', Object.assign(person, {shape: 'circle', radius: 50, visibility: 1}))
-    })
+    data.links.persons = data.users.map(person => dataCollector.addNode('person', person, preparePerson))
     delete data.users
   }
-  dataCollector.addNode('room', Object.assign(data, {shape: 'circle', radius: 50, visibility: 1}))
+  dataCollector.addNode('room', data, prepareRoom)
   return {ok: true}
 }
 

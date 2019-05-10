@@ -111,8 +111,12 @@ svg {
       fill: #eeeeee;
     }
 
-    circle + .title .text-bg {
+    &.room + .title .text-bg {
       fill: transparent;
+    }
+
+    &.room .title tspan {
+      fill: #6699cc;
     }
   }
 }

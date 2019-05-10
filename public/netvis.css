@@ -93,8 +93,11 @@ svg .node circle {
   stroke: none;
   fill: #eeeeee;
 }
-svg .node circle + .title .text-bg {
+svg .node.room + .title .text-bg {
   fill: transparent;
+}
+svg .node.room .title tspan {
+  fill: #6699cc;
 }
 
 .command {
