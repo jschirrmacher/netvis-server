@@ -10,6 +10,7 @@ async function readData(fileName) {
   const headers = {'content-type': 'application/json'}
   await Object.keys(data).reduce((promise, roomId) => promise.then(async () => {
     data[roomId].name = 'room_' + roomId
+    data[roomId].id = roomId
     const body = JSON.stringify(data[roomId])
     const result = await fetch('http://localhost:3000/rooms', {method: 'post', body, headers})
     if (!result.ok) {

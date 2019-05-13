@@ -1,8 +1,7 @@
 FROM node:dubnium-alpine
 
 RUN mkdir /server
-ADD DataCollector.js index.js package.json /server/
-ADD public /server/public
+ADD server /server
 
 WORKDIR /server
 RUN npm install --production

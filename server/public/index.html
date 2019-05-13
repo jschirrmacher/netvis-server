@@ -10,9 +10,12 @@
 </head>
 <body>
 <svg id="root">
-    <filter id="shadow" x="-10%" y="-10%" width="200%" height="200%">
-        <feDropShadow dx="6" dy="6" stdDeviation="6" flood-color="#888" flood-opacity="1"></feDropShadow>
-    </filter>
+    <marker id="marker-start" markerWidth="6" markerHeight="6" refX="3" refY="3">
+        <circle r="3" cx="3" cy="3" fill="black"></circle>
+    </marker>
+    <marker id="marker-end" markerWidth="6" markerHeight="6" refX="3" refY="3">
+        <circle r="3" cx="3" cy="3" fill="black"></circle>
+    </marker>
 </svg>
 
 <div class="zoom">

@@ -3,13 +3,13 @@ const fs = require('fs')
 const express = require('express')
 const app = express()
 const path = require('path')
-const DataCollector = require('./DataCollector');
-const dataCollector = new DataCollector()
-const roomController = require('./RoomController')({dataCollector})
+const Model = require('./Model');
+const model = new Model()
+const roomController = require('./RoomController')({model})
 const WSUpdater = require('js-ws-updater')
 const logger = console
 
-new WSUpdater({app, route: '/feed', modelListener: dataCollector, expressWs: require('express-ws')})
+new WSUpdater({app, route: '/feed', modelListener: model, expressWs: require('express-ws')})
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: false}))
@@ -27,15 +27,14 @@ function sendIndex(req, res) {
   res.send(indexFile.replace(' data-static="true"', ''))
 }
 
-app.use('/UpdateListener.js', express.static(path.join(__dirname, 'node_modules', 'js-ws-updater', 'UpdateListener.js')))
-app.use('/netvis', express.static(path.join(__dirname, 'node_modules', 'js-netvis', 'dist')))
+const nodeModulesDir = path.resolve(__dirname, '..', 'node_modules')
+app.use('/UpdateListener.js', express.static(path.join(nodeModulesDir, 'js-ws-updater', 'UpdateListener.js')))
+app.use('/netvis', express.static(path.join(nodeModulesDir, 'js-netvis', 'dist')))
 app.get('/', sendIndex)
 
-app.get('/rooms', jsonService(getNodes))
-app.get('/topics', jsonService(getNodes))
-app.get('/persons', jsonService(getNodes))
-
-// app.put('/nodes/:id', (req, res) => res.json(dataCollector.saveNodeChanges(req.params.id, req.body)))
+app.get('/rooms', jsonService(() => model.getAll()))
+app.get('/topics', jsonService(() => model.getAll()))
+app.get('/persons', jsonService(() => model.getAll()))
 
 app.post('/rooms', jsonService(req => roomController.addRoom(req.body)))
 app.put('/rooms', jsonService(req => roomController.addRoom(req.body)))
@@ -73,8 +72,4 @@ function jsonService (func) {
       next(error)
     }
   }
-}
-
-function getNodes() {
-  return dataCollector.getAll()
 }

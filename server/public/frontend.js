@@ -23,23 +23,29 @@ script.addEventListener('load', function () {
     rooms: '🚪'
   }
   const nodeRenderer = new NodeRenderer({showRefLinks: true})
-  nodeRenderer.renderRefLinksContent = function (enter) {
-    enter.text(d => icons[d.type])
+  nodeRenderer.renderRefLinks = function (enter) {
+    enter.append('g')
+      .attr('class', 'reflinks')
+      .selectAll(null)
+      .data(d => {
+        const y = d.bbox.y + d.bbox.height + 24
+        return Object.keys(d.links || {}).map((type, i) => ({type, x: d.bbox.x, y: y + i * 24}))
+      })
+      .enter()
+      .append('g')
+      .attr('transform', d => `translate(${d.x}, ${d.y})`)
+      .attr('data-ref', d => d.type)
+      .append('text')
+      .text(d => d.name = icons[d.type] + ' ' + texts[d.type])
+      .call(d => this.wrap(d, 200))
   }
 
   function prepareNode(node, threshold) {
     const weight = Math.sqrt(node.weight)
-    const size = node.weight * 10 + 50
     node.visible = weight >= threshold
     node.fontSize = Math.sqrt(weight)
-    if (node.className === 'topic') {
-      node.shape = 'rect'
-      node.width = Math.min(size, 300)
-      node.height = size * 0.7
-    } else {
-      node.shape = 'circle'
-      node.radius = Math.min(node.weight * 50, 150)
-    }
+    node.shape = 'circle'
+    node.radius = Math.min(node.weight * 50, 150)
     return node
   }
 
@@ -63,12 +69,13 @@ script.addEventListener('load', function () {
     domSelector: '#root',
     maxLevel: 3,
     nodeRenderer,
+    useMarkers: true,
     velocityDecay: 0.55,
     charge: function (manyBody) {
-      return manyBody.strength(-1000)
+      return manyBody.strength(-100)
     },
     collide: function (collide) {
-      return collide.radius(d => (d.radius || d.width) * 1.1)
+      return collide.radius(d => (d.radius || d.width) * 1.3)
     },
     forceX: function (force) {
       return force.strength(0.1)

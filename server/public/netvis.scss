@@ -64,29 +64,30 @@ svg {
     }
 
     .reflinks {
-      position: absolute;
       opacity: 0.001;
       transition: opacity 0.3s;
+      cursor: pointer;
 
       text {
         font-size: 32px;
-        stroke: #428bca;
+        fill: #428bca;
       }
 
       .text-bg {
         fill: #eeefef;
-        rx: 5px;
-        ry: 5px;
+        rx: 0;
+        ry: 0;
       }
 
       g:hover .text-bg {
-        fill: #cccfcf;
+        fill: #cccccc;
       }
 
     }
 
     &:hover .reflinks {
       opacity: 1;
+      transition-delay: 0.3s;
     }
 
     &.withBg .title {
@@ -109,6 +110,12 @@ svg {
     circle {
       stroke: none;
       fill: #eeeeee;
+    }
+
+    &.room {
+      circle {
+        fill: #bbddff;
+      }
     }
 
     &.room + .title .text-bg {

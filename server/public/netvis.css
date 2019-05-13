@@ -57,24 +57,25 @@ svg .node .text-bg {
   ry: 5px;
 }
 svg .node .reflinks {
-  position: absolute;
   opacity: 0.001;
   transition: opacity 0.3s;
+  cursor: pointer;
 }
 svg .node .reflinks text {
   font-size: 32px;
-  stroke: #428bca;
+  fill: #428bca;
 }
 svg .node .reflinks .text-bg {
   fill: #eeefef;
-  rx: 5px;
-  ry: 5px;
+  rx: 0;
+  ry: 0;
 }
 svg .node .reflinks g:hover .text-bg {
-  fill: #cccfcf;
+  fill: #cccccc;
 }
 svg .node:hover .reflinks {
   opacity: 1;
+  transition-delay: 0.3s;
 }
 svg .node.withBg .title {
   transform: translate(0, 40px);
@@ -92,6 +93,9 @@ svg .node rect {
 svg .node circle {
   stroke: none;
   fill: #eeeeee;
+}
+svg .node.room circle {
+  fill: #bbddff;
 }
 svg .node.room + .title .text-bg {
   fill: transparent;
