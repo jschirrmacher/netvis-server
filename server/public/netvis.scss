@@ -131,6 +131,12 @@ svg {
         fill: #ffccaa;
       }
     }
+
+    &.topic {
+      .title .text-bg {
+        fill: transparent;
+      }
+    }
   }
 }
 
