@@ -29,7 +29,7 @@ script.addEventListener('load', function () {
       .selectAll(null)
       .data(d => {
         const y = d.bbox.y + d.bbox.height + 24
-        return Object.keys(d.links || {}).map((type, i) => ({type, x: d.bbox.x, y: y + i * 24}))
+        return Object.keys(d.links || {}).map((type, i) => ({type, x: d.bbox.x, y: y + i * 26}))
       })
       .enter()
       .append('g')
