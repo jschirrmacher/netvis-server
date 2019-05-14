@@ -40,6 +40,7 @@ print('TAGGING_FILENAME: ' + str(config.TAGGING_FILENAME))
 print('MODEL_FILENAME: ' + str(config.MODEL_FILENAME))
 print('RESULT_FILENAME: ' + str(config.RESULT_FILENAME))
 print('NETVIS SERVER_URL: ' + str(config.SERVER_URL))
+print('MONGO_URL: ' + str(config.MONGO_URL))
 print('==============================================================')
 
 preprocessing.init_nlp()

@@ -5,7 +5,6 @@ RUN pip install nltk
 RUN pip install pymongo
 
 ADD src /home
-RUN chmod +x /home/main.py
 
 WORKDIR /home
-CMD ["python", "main.py", "--datac=1000", "--mongo_url=mongodb://host.docker.internal:27017", "--server_url=http://host.docker.internal:3002"]
+CMD python main.py --datac=$DATA_COUNT --mongo_url=$MONGO_URL --server_url=$SERVER_URL --db=$MONGO_DB

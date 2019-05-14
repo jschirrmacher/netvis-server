@@ -2,6 +2,7 @@
 /node_modules/
 /data/
 
+/python_backend/.env
 /python_backend/src/result/
 *.pyc
 /python_backend/src/data/tiger_release_aug07.corrected.16012013.conll09
