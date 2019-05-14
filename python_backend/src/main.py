@@ -16,8 +16,8 @@ parser.add_argument('--mv', type=str, help='Model version (String)', default='0'
 parser.add_argument('--corpus', type=str, help='Corpus file (String)', default='tiger_release_aug07.corrected.16012013.conll09')
 parser.add_argument('--res', type=int, help='Result file number (Int)', default=13)
 parser.add_argument('--datac', type=int, help='Number of data entries (Int)', default=100)
+parser.add_argument('--filterw', type=int, help='Filter result by occurance (Int)', default=10)
 parser.add_argument('--mpc', type=int, help='Counter for multiprocessing (Int)', default=4)
-parser.add_argument('--redo_dataloading', type=bool, help='Force loading data from db (Bool)', default=True)
 parser.add_argument('--redo_training', type=bool, help='Force retraining nlp model (Bool)', default=False)
 parser.add_argument('--redo_tagging', type=bool, help='Force retagging wordlist (Bool)', default=False)
 parser.add_argument('--skip_types', type=list, help='List of room types to skip (List)', default=[])
@@ -30,8 +30,8 @@ print('NLP_MODEL_VERSION: ' + str(config.NLP_MODEL_VERSION))
 print('NLP_CORPUS: ' + str(config.NLP_CORPUS))
 print('RESULT_NUMBER: ' + str(config.RESULT_NUMBER))
 print('DATA_COUNT: ' + str(config.DATA_COUNT))
+print('FILTERW: ' + str(config.FILTERW))
 print('MONGO_DB: ' + str(config.MONGO_DB))
-print('FORCE_RELOAD: ' + str(config.FORCE_RELOAD))
 print('FORCE_RETAG: ' + str(config.FORCE_RETAG))
 print('FORCE_RETRAIN: ' + str(config.FORCE_RETRAIN))
 print('SKIP_TYPES: ' + str(config.SKIP_TYPES))
@@ -61,7 +61,7 @@ if (len(to_tag)):
     tagger = loader.load_model()
     tagged += tagging.start_tagging(to_tag, tagger)
 
-content = postprocessing.filter_nouns(content, tagged)
+content = postprocessing.filter_content(content, tagged)
 
 loader.save_json(content)
 

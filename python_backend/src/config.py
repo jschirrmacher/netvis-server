@@ -6,7 +6,6 @@ def init(args):
     global DATA_COUNT
     global MONGO_DB
     global MONGO_URL
-    global FORCE_RELOAD
     global FORCE_RETAG
     global FORCE_RETRAIN
     global SKIP_TYPES
@@ -16,14 +15,15 @@ def init(args):
     global RESULT_FILENAME
     global MPC
     global SERVER_URL
+    global FILTERW
 
     NLP_MODEL_VERSION = args.mv
     NLP_CORPUS = args.corpus
     RESULT_NUMBER = args.res
     DATA_COUNT = args.datac
+    FILTERW = args.filterw
     MONGO_DB = args.db
     MONGO_URL = args.mongo_url
-    FORCE_RELOAD = args.redo_dataloading
     FORCE_RETAG = args.redo_tagging
     FORCE_RETRAIN = args.redo_training
     SKIP_TYPES = args.skip_types
