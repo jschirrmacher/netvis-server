@@ -125,6 +125,12 @@ svg {
     &.room .title tspan {
       fill: #6699cc;
     }
+
+    &.person {
+      circle {
+        fill: #ffccaa;
+      }
+    }
   }
 }
 

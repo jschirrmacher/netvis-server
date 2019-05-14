@@ -103,6 +103,9 @@ svg .node.room + .title .text-bg {
 svg .node.room .title tspan {
   fill: #6699cc;
 }
+svg .node.person circle {
+  fill: #ffccaa;
+}
 
 .command {
   display: none;

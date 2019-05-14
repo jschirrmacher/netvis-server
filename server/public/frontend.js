@@ -12,6 +12,8 @@ const logger = console
 const thresholdField = document.getElementById('threshold')
 
 let network
+let minWeight
+let maxWeight
 
 const script = document.createElement('script')
 script.addEventListener('load', function () {
@@ -43,10 +45,23 @@ script.addEventListener('load', function () {
   function prepareNode(node, threshold) {
     const weight = Math.sqrt(node.weight)
     node.visible = weight >= threshold
-    node.fontSize = Math.sqrt(weight)
     node.shape = 'circle'
-    node.radius = Math.min(node.weight * 50, 150)
+    if (node.className === 'person') {
+      node.radius = 50
+      node.fontSize = 1
+    } else {
+      node.radius = Math.min(node.weight * 10, 150)
+      node.fontSize = weight
+    }
     return node
+  }
+
+  function updateAndLogWeightRange(newValue) {
+    if (newValue) {
+      minWeight = Math.min(minWeight, newValue)
+      maxWeight = Math.max(maxWeight, newValue)
+    }
+    logger.info('Weight range: ' + minWeight + '...' + maxWeight)
   }
 
   function prepare(data) {
@@ -61,6 +76,9 @@ script.addEventListener('load', function () {
     const createLink = o => '<a href="' + base + 't=' + o.type + '">' + o.text + '</a>'
     const options = Object.keys(types).map(createOption).filter(d => d)
     document.querySelector('.selection').innerHTML = options.length > 1 ? options.map(createLink).join('\n') : ''
+    minWeight = data.nodes.reduce((min, n) => Math.min(n.weight, min), 99999999)
+    maxWeight = data.nodes.reduce((max, n) => Math.max(n.weight, max), 0)
+    updateAndLogWeightRange()
     return data
   }
 
@@ -159,6 +177,7 @@ script.addEventListener('load', function () {
 
         case 'add':
           network.addNode(prepareNode(msg.node))
+           updateAndLogWeightRange(msg.node.weight)
           network.update()
           break
 
@@ -169,6 +188,7 @@ script.addEventListener('load', function () {
 
         case 'change':
           network.updateNode(prepareNode(msg.node))
+          updateAndLogWeightRange(msg.node.weight)
           network.update()
           break
       }
