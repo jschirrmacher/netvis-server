@@ -49,8 +49,11 @@ script.addEventListener('load', function () {
     if (node.className === 'person') {
       node.radius = 50
       node.fontSize = 1
+    } else if (node.className === 'room') {
+      node.radius = Math.min(node.weight * 50, 150)
+      node.fontSize = weight * 2
     } else {
-      node.radius = Math.min(node.weight * 10, 150)
+      node.radius = Math.min(Math.sqrt(node.weight) * 20, 150)
       node.fontSize = weight
     }
     return node
@@ -88,18 +91,18 @@ script.addEventListener('load', function () {
     maxLevel: 3,
     nodeRenderer,
     useMarkers: true,
-    velocityDecay: 0.55,
+    velocityDecay: 0.9,
     charge: function (manyBody) {
-      return manyBody.strength(-100)
+      return manyBody.strength(100)
     },
     collide: function (collide) {
-      return collide.radius(d => (d.radius || d.width) * 1.3)
+      return collide.radius(d => (d.radius || d.width / 2) * 2)
     },
     forceX: function (force) {
-      return force.strength(0.1)
+      return force.strength(0)
     },
     forceY: function (force) {
-      return force.strength(0.1)
+      return force.strength(0)
     },
     handlers: {
       prepare,
