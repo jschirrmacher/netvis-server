@@ -37,7 +37,7 @@ module.exports = ({model}) => {
       }
 
       data.className = 'room'
-      data.weight = (data.links.topics && Math.log(data.links.topics.length) / Math.log(4)) || 1
+      data.weight = (data.links.topics && Math.log(data.links.topics.length + 1) / Math.log(4)) || 1
 
       model.addNode('room', data)
       return {ok: true}
