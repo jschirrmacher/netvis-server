@@ -1,5 +1,9 @@
 /* eslint-env node */
 
+const faker = require('faker')
+
+const names = {}
+
 module.exports = ({model}) => {
   return {
     addRoom(data) {
@@ -11,10 +15,13 @@ module.exports = ({model}) => {
       }
 
       function preparePerson(name) {
+        if (!names[name]) {
+          names[name] = faker.name.findName()
+        }
         const person = {
           className: 'person',
           weight: 1,
-          name
+          name: names[name]
         }
         return model.addNode('person', person)
       }
