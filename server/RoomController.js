@@ -10,9 +10,12 @@ module.exports = ({model}) => {
         return model.addNode('topic', topic)
       }
 
-      function preparePerson(person) {
-        person.className = 'person'
-        person.weight = 1
+      function preparePerson(name) {
+        const person = {
+          className: 'person',
+          weight: 1,
+          name
+        }
         return model.addNode('person', person)
       }
 
