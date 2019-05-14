@@ -106,6 +106,9 @@ svg .node.room .title tspan {
 svg .node.person circle {
   fill: #ffccaa;
 }
+svg .node.topic .title .text-bg {
+  fill: transparent;
+}
 
 .command {
   display: none;
