@@ -97,7 +97,7 @@ svg .node circle {
 svg .node.room circle {
   fill: #bbddff;
 }
-svg .node.room + .title .text-bg {
+svg .node.room .title .text-bg {
   fill: transparent;
 }
 svg .node.room .title tspan {
