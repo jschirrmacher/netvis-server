@@ -4,6 +4,8 @@ RUN pip install requests
 RUN pip install nltk
 RUN pip install pymongo
 
+RUN python -c "exec(\"import nltk\nnltk.download('punkt')\")"
+
 ADD src /home
 
 WORKDIR /home

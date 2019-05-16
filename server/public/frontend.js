@@ -154,19 +154,33 @@ script.addEventListener('load', function () {
   thresholdField.addEventListener('change', () => {
     const nodes2Remove = []
     const nodes2Show = []
+    const links2Show = []
     network.nodes.forEach(n => {
-      const newVisibility = n.weight >= thresholdField.value
-      if (n.visible !== newVisibility) {
-        if (n.visible) {
-          nodes2Remove.push(n)
-        } else {
-          nodes2Show.push(n)
-        }
+      if (n.visible == true) {
+        nodes2Remove.push(n)
       }
-      n.visible = newVisibility
+      n.visible = false
     })
     network.diagram.remove(nodes2Remove, [])
-    network.diagram.add(nodes2Show, [])
+    network.nodes.filter(n => n.className === 'room').forEach(n => {
+      const newVisibility = n.weight >= thresholdField.value
+      if (newVisibility) {
+          console.log(n.weight)
+          n.links.topics.forEach(c => {
+            c.target.visible = true
+            nodes2Show.push(c.target)
+            links2Show.push(c)
+          })
+          n.links.persons.forEach(c => {
+            c.target.visible = true
+            nodes2Show.push(c.target)
+            links2Show.push(c)
+          })
+          nodes2Show.push(n)
+        }
+      n.visible = newVisibility
+    })
+    network.diagram.add(nodes2Show, links2Show)
     network.update()
   })
 

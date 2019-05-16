@@ -7,7 +7,8 @@ import nltk
 
 import config
 def init_nlp():
-    nltk.download('punkt')
+    print('skipped download')
+    #nltk.download('punkt')
 
 def filter_words(msg):
     tokens = []
