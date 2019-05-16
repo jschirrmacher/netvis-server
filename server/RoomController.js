@@ -3,44 +3,45 @@
 const faker = require('faker')
 
 const names = {}
+let nameId = 1
 
 module.exports = ({model}) => {
   return {
     addRoom(data) {
-      data.links = data.links || {}
+      const topics = data.topics || []
+      delete data.topics
+      const persons = data.users || []
+      delete data.users
+      data.className = 'room'
+      model.addNode('room', data)
+
+      data.links = {}
+      data.links.topics = topics.map(prepareTopic)
+      data.links.persons = persons.map(preparePerson)
+      data.weight = (data.links.topics && Math.log(data.links.topics.length + 1) / Math.log(4)) || 1
+      model.changeNode(data.id, 'rooms', data)
+      return {ok: true}
 
       function prepareTopic(topic) {
-        topic.className = 'topic'
-        return model.addNode('topic', topic)
+        const existing = model.find('topic', topic)
+        if (!existing) {
+          topic.className = 'topic'
+          model.addNode('topic', topic)
+        }
+        return model.addLink(data, existing || topic)
       }
 
       function preparePerson(name) {
         if (!names[name]) {
-          names[name] = faker.name.findName()
+          names[name] = {id: 'person_' + nameId++, name: faker.name.findName()}
         }
-        const person = {
-          className: 'person',
-          weight: 1,
-          name: names[name]
+        const person = Object.assign({className: 'person', weight: 1}, names[name])
+        const existing = model.getById('person', names[name].id)
+        if (!existing) {
+          model.addNode('person', person)
         }
-        return model.addNode('person', person)
+        return model.addLink(data, person)
       }
-
-      if (data.topics) {
-        data.links.topics = data.topics.map(prepareTopic)
-        delete data.topics
-      }
-
-      if (data.users) {
-        data.links.persons = data.users.map(preparePerson)
-        delete data.users
-      }
-
-      data.className = 'room'
-      data.weight = (data.links.topics && Math.log(data.links.topics.length + 1) / Math.log(4)) || 1
-
-      model.addNode('room', data)
-      return {ok: true}
     }
   }
 }

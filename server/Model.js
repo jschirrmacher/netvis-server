@@ -31,6 +31,10 @@ module.exports = class Model {
     return {nodes}
   }
 
+  getById(type, id) {
+    return this.store[type + 's'][id]
+  }
+
   find(type, node) {
     return this.store[type + 's'].find(n => n.id === node.id || n.name === node.name)
   }
@@ -39,24 +43,28 @@ module.exports = class Model {
     const existing = this.find(type, node)
     if (existing) {
       existing.weight += node.weight
-      this.notifyListeners({type: 'change', node: existing})
+      this.notifyListeners({type: 'changeNode', node: existing})
       return existing.id
     } else {
       if (!node.id) {
         node.id = type + '_' + node.name
       }
       this.store[type + 's'].push(node)
-      this.notifyListeners({type: 'add', node})
+      this.notifyListeners({type: 'addNode', node})
       return node.id
     }
   }
 
-  async change(id, type, change) {
-    const node = this.store[type].find(n => n.id === +id)
-    if (node) {
-      Object.keys(change).forEach(name => node[name] = change[name])
-    }
-    this.notifyListeners({type: 'change', node})
-    return node
+  changeNode(id, type, change) {
+    this.notifyListeners({type: 'changeNode', change})
+  }
+
+  addLink(node1, node2) {
+    const type = node2.className + 's'
+    node1.links = node1.links || {}
+    node1.links[type] = node1.links[type] || []
+    node1.links[type].push(node2.id)
+    this.notifyListeners({type: 'addLink', source: node1.id, target: node2.id})
+    return node2.id
   }
 }

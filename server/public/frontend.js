@@ -14,6 +14,7 @@ const thresholdField = document.getElementById('threshold')
 let network
 let minWeight
 let maxWeight
+let linkIds = 1
 
 const script = document.createElement('script')
 script.addEventListener('load', function () {
@@ -43,7 +44,7 @@ script.addEventListener('load', function () {
   }
 
   function prepareNode(node, threshold) {
-    const weight = Math.sqrt(node.weight)
+    const weight = Math.sqrt(node.weight || 1)
     node.visible = weight >= threshold
     node.shape = 'circle'
     if (node.className === 'person') {
@@ -151,12 +152,12 @@ script.addEventListener('load', function () {
     }
   })
 
-  thresholdField.addEventListener('change', () => {
+  thresholdField.addEventListener('changeNode', () => {
     const nodes2Remove = []
     const nodes2Show = []
     const links2Show = []
     network.nodes.forEach(n => {
-      if (n.visible == true) {
+      if (n.visible) {
         nodes2Remove.push(n)
       }
       n.visible = false
@@ -165,7 +166,7 @@ script.addEventListener('load', function () {
     network.nodes.filter(n => n.className === 'room').forEach(n => {
       const newVisibility = n.weight >= thresholdField.value
       if (newVisibility) {
-          console.log(n.weight)
+          logger.info(n.weight)
           n.links.topics.forEach(c => {
             c.target.visible = true
             nodes2Show.push(c.target)
@@ -192,22 +193,38 @@ script.addEventListener('load', function () {
           network.update()
           break
 
-        case 'add':
+        case 'addNode':
           network.addNode(prepareNode(msg.node))
            updateAndLogWeightRange(msg.node.weight)
           network.update()
           break
 
-        case 'delete':
+        case 'deleteNode':
           network.removeNode(msg.node)
           network.update()
           break
 
-        case 'change':
+        case 'changeNode':
           network.updateNode(prepareNode(msg.node))
           updateAndLogWeightRange(msg.node.weight)
           network.update()
           break
+
+        case 'addLink': {
+          const source = network.nodes.find(n => n.id === msg.source)
+          const target = network.nodes.find(n => n.id === msg.target)
+          const link = {id: linkIds++, source, target}
+          const stype = link.source.className + 's'
+          link.target.links = link.target.links || {}
+          link.target.links[stype] = link.target.links[stype] || []
+          link.target.links[stype].push(link)
+          const ttype = link.target.className + 's'
+          link.source.links = link.source.links || {}
+          link.source.links[ttype] = link.source.links[ttype] || []
+          link.source.links[ttype].push(link)
+          network.diagram.add([], [link])
+          break
+        }
       }
     }
   }
